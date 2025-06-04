@@ -1,8 +1,8 @@
 class Mobile{
-    String  brand;
-    String  model;
-    String color;
-    int storage;
+    private String  brand;
+    private String  model;
+    private String color;
+    private int storage;
     public Mobile(String brand, String model, String color,int storage){
         this.brand = brand;
         this.model = model;

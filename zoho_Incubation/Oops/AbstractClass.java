@@ -1,56 +1,62 @@
 
 abstract class Person{
     String name;
+    int energy = 0;
     Person(String name){
         this.name = name;
     }
-    void eat(){
-        System.out.println(name +" Eating...");
+    void eat(String food){
+        energy +=20;
+        System.out.println(name +" Eating "+food+" Energy Increaces "+energy);
     }
-    void sleep(){
-        System.out.println(name+" Sleeping...");
+    void sleep(int  sleepTime){
+        energy+=(sleepTime*10)/2;
+        System.out.println(name+" Sleeping .."+sleepTime+"hrs Energy is "+energy);
     }
-    abstract void talk();
-    abstract void walk();
-    abstract void study();
-    abstract void aim();
+    abstract void talk(String topic);
+    abstract void walk(int km);
+    abstract void study(String subject);
+    abstract void aim(String aim);
 }
 abstract  class Child extends Person{
     Child(String name){
         super(name);
     }
-    public void talk(){
-        System.out.println(name+" Talking...");
+    public void talk(String topic){
+        System.out.println(name+" Talking about "+topic);
     }
-    public void walk(){
-        System.out.println(name+" Walking...");
+    public void walk(int km){
+        if(km>0)
+         energy -=km/10;
+        System.out.println(name+" is Walking "+km+"KM Energy is "+energy);
     }
 }
 abstract class Adult extends Child{
     Adult(String name){
         super(name);
     }
-    void  study(){
-        System.out.println(name+" is Studing...");
+    void  study(String subject){
+        energy -=20;
+        System.out.println(name+" is Studing "+subject+" Energy decreases "+energy);
     }
 }
 class Teenage extends Adult{
     Teenage(String name){
         super(name);
     }
-    public void aim(){
-        System.out.println(name+"Got Work Sucessfully!");
+    public void aim(String aim){
+        System.out.println(name+" achived Aim that  "+aim);
     }
 }
 
 public class AbstractClass {
     public static void main(String[] args) {
         Person teenage = new Teenage("Karthick");
-        teenage.eat();
-        teenage.sleep();
-        teenage.walk();
-        teenage.talk();
-        teenage.study();
-        teenage.aim();
+        teenage.eat("Dosa");
+        teenage.sleep(10);
+        teenage.walk(12);
+        teenage.talk("Weathers");
+        teenage.study("CS");
+        teenage.aim("IT");
     }
 }

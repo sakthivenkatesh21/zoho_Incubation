@@ -7,8 +7,8 @@ class Details{
         this.age = age;
         this.gender = gender;
     }
-    public void printDetails(){
-        System.out.println(name+" "+age+" "+gender);
+    public String printDetails(){
+        return name+" "+age+" "+gender;
     }
 }
 class Student extends Details{
@@ -17,18 +17,18 @@ class Student extends Details{
         super(name, age, gender);
         this.collegeName = collegeName;
     }
-    public void printDetails(){
-        System.out.println(name+" "+age+" "+gender+" "+collegeName);
+    public String printDetails(){
+        return name+" "+age+" "+gender+" "+collegeName;
     }
 }
 class Employee extends Student{
     double salary;
     Employee(String name, int age, String gender,String collegeName, double salary){
         super(name, age, gender,collegeName);
-        this.salary = salary;
+        this.salary = salary>0 ?salary : 0.0;
     }
-    public void printDetails(){
-        System.out.println(name+" "+age+" "+gender+" "+collegeName+" "+salary);
+    public String printDetails(){
+        return name+" "+age+" "+gender+" "+collegeName+" "+salary;
     }
 }
 public class MethodOverriding {
@@ -39,6 +39,6 @@ public class MethodOverriding {
         printDetails(emp);
     }
     private static void printDetails(Details details){
-        details.printDetails();
+        System.out.println(details.printDetails());
     }
 }

@@ -41,8 +41,8 @@ class Brain{
     public String getColor() {
         return color;
     }
-    public void infoBrain(){
-        System.out.println("Brain info : "+"Weight :"+weight+" color :"+color);
+    public String infoBrain(){
+        return "Brain info : "+"Weight :"+weight+" color :"+color;
     }
 }
 class Heart{
@@ -63,8 +63,8 @@ class Heart{
     public int getBpm() {
         return bpm;
     }
-    public void infoheart(){
-        System.out.println("Heart Info : "+"Weight :"+weight+" color :"+color+" BPM :"+bpm);
+    public String infoheart(){
+        return "HeartInfo : "+"Weight :"+weight+" color :"+color+" BPM :"+bpm;
     }
 
 }
@@ -100,8 +100,8 @@ public class Association {
         System.out.println(book.getBookName()+" author is "+book.getAuthor());
     }
     private static void compsition(Human person){
-        person.brain.infoBrain();
-        person.heart.infoheart();
+        System.out.println(person.brain.infoBrain());
+        System.out.println(person.heart.infoheart());
     }
     private  static void aggregation(Human person, Bike bike, Book book){
         person.hasBike(bike);
