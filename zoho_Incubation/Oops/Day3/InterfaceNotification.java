@@ -27,6 +27,7 @@ public class InterfaceNotification {
     public static void main(String[] args) {
         Notification paytm = new Paytm();
         Notification gpay  = new Gpay();
+        // System.out.println(()-> "hi÷÷");
         
         Notifications notification = new Notifications();
         notification.sendNotification(gpay);

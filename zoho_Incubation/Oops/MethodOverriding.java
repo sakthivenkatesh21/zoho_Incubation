@@ -33,6 +33,8 @@ class Employee extends Student{
 }
 public class MethodOverriding {
     public static void main(String[] args) {
+        Student stu1 = new Student("John Doe", 10, "Male","VTU");
+
         Details stu = new Student("John Doe", 10, "Male","VTU");
         printDetails(stu);
         Details emp = new Employee("Kishore",24,"Male","KLU University",20000);

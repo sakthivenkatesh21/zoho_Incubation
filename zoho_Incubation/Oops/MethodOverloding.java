@@ -50,7 +50,7 @@ class Mark{
 public class MethodOverloding {
     public static void main(String[] args) {
         Mark mark = new Mark();
-        mark.mark(12, 34, 56, 440, 89, 90);
+        mark.mark(12, 34, 56, 40, 89, 90);
         mark.mark(12, 34, 56, 80, 89);
     }
 }

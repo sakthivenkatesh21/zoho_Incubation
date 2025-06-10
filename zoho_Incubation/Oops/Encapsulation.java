@@ -11,7 +11,12 @@ class StateBank{
     public double getBalance() {
         return balance;
     }
-    public void deposite(double balance) {
+    public void setBalance(double balance,StateBank bank){
+        if(this.name.equals(bank.name) && this.accNo.equals(bank.accNo) ){
+            deposite(balance);
+        }
+    }
+    private void deposite(double balance) {
         if(balance>0){
             this.balance = balance;
             System.out.println("Amount Credited "+balance);
@@ -23,9 +28,11 @@ class StateBank{
         if (amount > 0 && amount <= balance) {
             balance -= amount;
             System.out.println(amount + " withdrawn. Remaining Balance: " + balance);
+            
         } else {
             System.out.println("Invalid withdraw amount or Insufficient balance.");
         }
+
     }
     public String getAccNo() {
         return accNo;
@@ -48,8 +55,9 @@ public class Encapsulation {
         System.out.println("Name :"+stateBank.getName());
         System.out.println("Account Number :"+stateBank.getAccNo());
         System.out.println("Balance "+stateBank.getBalance());
-        stateBank.deposite(1000);
-        stateBank.withdraw(0);
+
+        stateBank.setBalance(1000,stateBank);
+        stateBank.withdraw(12);
 
 
     }
