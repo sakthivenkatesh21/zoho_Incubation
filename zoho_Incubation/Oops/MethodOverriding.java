@@ -44,3 +44,4 @@ public class MethodOverriding {
         System.out.println(details.printDetails());
     }
 }
+
