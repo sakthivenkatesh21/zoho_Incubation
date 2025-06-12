@@ -14,6 +14,12 @@ class Mobile{
         powerOff();
     }
 
+    public String getColor() {
+        return color;
+    }
+    public int getStorage() {
+        return storage;
+    }
     public void powerOn(){
         System.out.println(brand+" "+model+" Powered ON Successfully");
     }

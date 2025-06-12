@@ -1,4 +1,4 @@
-package zoho_Incubation.Solid_Principles.SingleResponsibilityPrinciples;
+package zoho_Incubation.Solid_Principles.SingleResponsibilityPrinciples.AfterSRP ;
 
 public class NotificationService {
     public void emailNotification(BankService bankService){

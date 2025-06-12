@@ -1,7 +1,8 @@
-package zoho_Incubation.Solid_Principles.SingleResponsibilityPrinciples;
+package zoho_Incubation.Solid_Principles.SingleResponsibilityPrinciples.AfterSRP ;
 
 public class Bank {
     public static void main(String[] args) {
+        
         BankService service = new BankService();
         service.openAccount("Sakthi","98308273633", 1000);
 

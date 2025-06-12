@@ -2,6 +2,7 @@ class Details{
     String name;
     int age;
     String gender;
+    
     Details(String name, int age, String gender){
         this.name = name;
         this.age = age;
@@ -33,7 +34,7 @@ class Employee extends Student{
 }
 public class MethodOverriding {
     public static void main(String[] args) {
-        Student stu1 = new Student("John Doe", 10, "Male","VTU");
+        // Student stu1 = new Student("John Doe", 10, "Male","VTU");
 
         Details stu = new Student("John Doe", 10, "Male","VTU");
         printDetails(stu);

@@ -1,9 +1,10 @@
-package zoho_Incubation.Solid_Principles.SingleResponsibilityPrinciples;
+package zoho_Incubation.Solid_Principles.SingleResponsibilityPrinciples.AfterSRP ;
 
 public class BankService {
     String name ;
     String accNo;
     double balance;
+    
 
     public void openAccount(String name,String accNo,double balance){
 
