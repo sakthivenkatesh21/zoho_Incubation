@@ -1,5 +1,5 @@
 package zoho_Incubation.Solid_Principles.LiskovSubstitutionPrinciple.AfterLSP;
 
-public interface Fuel extends InterfaceVechicle{
-    void fuel();
+public abstract class  Fuel extends InterfaceVechicle{
+    public abstract void fuel();
 }

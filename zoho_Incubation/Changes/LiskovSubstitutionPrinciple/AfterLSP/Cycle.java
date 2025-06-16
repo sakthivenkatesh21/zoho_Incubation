@@ -1,6 +1,6 @@
-package zoho_Incubation.Solid_Principles.LiskovSubstitutionPrinciple.AfterLSP;
+package zoho_Incubation.Changes.LiskovSubstitutionPrinciple.AfterLSP;
 
-public class Cycle extends InterfaceVechicle{
+public class Cycle extends AbstractVechicle{
     private String brand;
 
     public Cycle(String brand) {

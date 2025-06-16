@@ -1,10 +1,9 @@
 package Day3;
-import com.payment.api.*;
 
 public class InterfaceHides {
     public static void main(String[] args) {
-        PayementService service = PaymentProvider.getPayementService();
-        service.pay(1000,"1233222","sakthi");
+        // PayementService service = PaymentProvider.getPayementService();
+        // service.pay(1000,"1233222","sakthi");
     }
 }
 

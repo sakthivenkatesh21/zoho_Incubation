@@ -7,6 +7,7 @@ public class Button {
     public Button(Switch button){
         this.button = button;
     }
+    
     public void ON(){
         button.turnOn();  
     }

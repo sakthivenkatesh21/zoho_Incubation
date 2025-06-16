@@ -1,9 +1,9 @@
 package zoho_Incubation.Solid_Principles.LiskovSubstitutionPrinciple.AfterLSP;
 
-public interface InterfaceVechicle {
-    String getBrand();
-    void stop();
-    void start();
+public abstract class  InterfaceVechicle {
+    public abstract String getBrand();
+    public abstract void stop();
+    public abstract void start();
 }
     
 

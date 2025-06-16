@@ -2,6 +2,7 @@ package Day3;
 interface Notification{
     String sendNotification();
 }
+
 class Paytm implements Notification{
     public String sendNotification(){
         return "Payment done using Paytm";

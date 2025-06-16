@@ -1,17 +1,18 @@
 package Day3;
-interface  Camera{
-    String camera(int number );
-    
+class  Camera{
+    String camera(int number ){
+        return number == 1 ? "Camere is Turn on": "Camera is TurnOFF";         
+    }   
 }
 interface PhoneManager {
     void call(String number);
-    
+    String camera(int number);    
 }
 interface  Music{
     void playMusic(String [] music);
 }
 
-class Phone implements Camera, PhoneManager,Music{
+class Phone extends Camera  implements  PhoneManager,Music{
     private String brand;
     private String model;
     private int batteryPercentage;

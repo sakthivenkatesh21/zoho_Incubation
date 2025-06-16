@@ -1,9 +1,8 @@
-package zoho_Incubation.Solid_Principles.LiskovSubstitutionPrinciple.AfterLSP;
+package zoho_Incubation.Changes.LiskovSubstitutionPrinciple.BeforeLSP;
 
-public class ElectricCar extends Charge {
+public class ElectricCar extends Vechile{
     private String brand;
     private int batteryLevel;
-
     public ElectricCar(String brand) {
         this.brand = brand;
         this.batteryLevel = 0;
@@ -22,5 +21,8 @@ public class ElectricCar extends Charge {
     public void charge() {
         batteryLevel = 100;
         System.out.println(brand + " battery charged to "+batteryLevel+"%.");
+    }
+    public void fuel() {
+            throw  new UnsupportedOperationException("Electric car does not have fuel systems");
     }
 }

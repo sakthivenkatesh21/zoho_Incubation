@@ -1,6 +1,6 @@
-package zoho_Incubation.Solid_Principles.LiskovSubstitutionPrinciple.AfterLSP;
+package zoho_Incubation.Changes.LiskovSubstitutionPrinciple.BeforeLSP;
 
-public class Car extends Fuel{
+public class Car extends Vechile{
     private String brand;
     private int fuelLevel;
 
