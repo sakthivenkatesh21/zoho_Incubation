@@ -1,5 +1,13 @@
 package zoho_Incubation.Changes;
 
+interface Login{
+    String login();
+}
+
+interface Pay{
+    String payment();
+}
+
 class User{
     private String name;
     private int age;
@@ -35,12 +43,7 @@ class Bus {
     } 
 
 }
-interface Login{
-    String login();
-}
-interface Pay{
-    String payment();
-}
+
 class ZoloBus extends Bus implements Login,Pay{
     private int pay ;
     ZoloBus(User user, String seat,int pay){
