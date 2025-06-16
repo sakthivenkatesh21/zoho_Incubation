@@ -1,6 +1,6 @@
 package zoho_Incubation.Solid_Principles.DependencyInversionPrinciples.AfterDIP;
 
-public class Fan implements Remote{
+public class Fan implements Switch{
     private String deviceName;
     private String brand;
     private int volts ;

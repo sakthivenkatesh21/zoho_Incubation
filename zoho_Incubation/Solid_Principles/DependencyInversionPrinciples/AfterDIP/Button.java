@@ -1,10 +1,10 @@
 package zoho_Incubation.Solid_Principles.DependencyInversionPrinciples.AfterDIP;
 
-public class Switches {
+public class Button {
 
-    private Remote button;
+    private Switch button;
 
-    public Switches(Remote button){
+    public Button(Switch button){
         this.button = button;
     }
     public void ON(){

@@ -3,11 +3,11 @@ package zoho_Incubation.Solid_Principles.DependencyInversionPrinciples.AfterDIP;
 public class Main {
     public static void main(String[] args) {
 
-        Remote bulb = new LightBulb("LED", "Panasonic");
-        Remote fan = new Fan("Mini-Fan","V-Guard",120);
+        Switch bulb = new Bulb("LED", "Panasonic");
+        Switch fan = new Fan("Mini-Fan","V-Guard",120);
         
-        Switches button1 = new Switches(bulb);
-        Switches button2 = new Switches(fan);
+        Button button1 = new Button(bulb);
+        Button button2 = new Button(fan);
 
         button1.ON();
         button1.OFF();

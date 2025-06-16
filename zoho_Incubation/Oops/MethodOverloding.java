@@ -46,11 +46,18 @@ class Mark{
         }
         System.out.println("Student Passed Mark Obtained in HSC is "+total);
     }
+    // public void mark(float a,int b){
+    //     System.out.println(a+""+b);
+    // }
+    // public void mark(char a,char b){
+    //     System.out.println(a+""+b);
+    // }
 }
 public class MethodOverloding {
     public static void main(String[] args) {
         Mark mark = new Mark();
         mark.mark(12, 34, 56, 40, 89, 90);
         mark.mark(12, 34, 56, 80, 89);
+        // mark.mark('A', 'B');
     }
 }

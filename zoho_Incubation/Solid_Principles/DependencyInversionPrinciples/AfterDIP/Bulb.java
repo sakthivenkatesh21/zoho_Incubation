@@ -1,11 +1,11 @@
 package zoho_Incubation.Solid_Principles.DependencyInversionPrinciples.AfterDIP;
 
-public class LightBulb implements Remote {
+public class Bulb implements Switch {
     private String deviceName;
     private String brand;
     private boolean turn = false;
 
-    LightBulb(String deviceName, String brand){
+    Bulb(String deviceName, String brand){
         this.deviceName = deviceName;
         this.brand  = brand;
     }

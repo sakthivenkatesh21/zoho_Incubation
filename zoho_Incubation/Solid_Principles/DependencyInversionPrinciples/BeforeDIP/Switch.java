@@ -6,7 +6,7 @@ public class Switch {
 
         Bulb bulb = new Bulb("LED", "Panasonic");
 
-        SwitchDevice sDevice = new SwitchDevice(bulb);
-        sDevice.switchOperation();
+        Button button = new Button(bulb);
+        button.switchOperation();
     }
 }
