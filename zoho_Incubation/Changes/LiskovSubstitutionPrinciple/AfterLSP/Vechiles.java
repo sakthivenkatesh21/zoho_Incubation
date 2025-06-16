@@ -14,7 +14,7 @@ public class Vechiles {
         fCar.start();
         fCar.stop();
 
-        AbstractVechicle cyle = new Cycle("Hercules");
+        Vechicle cyle = new Cycle("Hercules");
         System.out.println(cyle.getBrand());
         cyle.start();
         cyle.stop();

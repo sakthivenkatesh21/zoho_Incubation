@@ -1,7 +1,9 @@
 package zoho_Incubation.Changes.LiskovSubstitutionPrinciple.AfterLSP;
 
-public abstract class Charge extends AbstractVechicle{
-    public abstract void charge ();
+public class Charge extends Vechicle{
+    public  void charge (){
+        System.out.println("Only Support EV ");
+    }
 }
 
 

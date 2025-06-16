@@ -1,5 +1,7 @@
 package zoho_Incubation.Changes.LiskovSubstitutionPrinciple.AfterLSP;
 
-public abstract class  Fuel extends AbstractVechicle{
-    public abstract void fuel();
+public  class  Fuel extends Vechicle{
+    public void fuel() {
+        System.out.println( "Fuel  refueled to 100%.");
+    }
 }

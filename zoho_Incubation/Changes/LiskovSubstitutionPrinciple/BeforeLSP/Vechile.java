@@ -1,8 +1,17 @@
 package zoho_Incubation.Changes.LiskovSubstitutionPrinciple.BeforeLSP;
 
-public abstract class  Vechile {
-    public abstract String getBrand();
-    public abstract void stop();
-    public abstract void start();
-    public abstract void fuel();
+public  class  Vechile {
+    public  String getBrand(){
+        return "Vechile";
+    }
+    public void start() {
+        System.out.println("Vehicle Start");
+    }
+
+    public void stop() {
+        System.out.println(" Vehicle  stopped.");
+    }
+    public void fuel(){
+        System.out.println("Fuel ");
+    }
 }
