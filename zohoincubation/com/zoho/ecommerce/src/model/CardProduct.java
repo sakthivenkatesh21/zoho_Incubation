@@ -1,0 +1,67 @@
+package zohoincubation.com.zoho.ecommerce.src.model;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class CardProduct  extends Product{
+    
+    private int quantity;
+    private LocalDateTime prodTimeAdded;
+    private OrderStatus producStatus;
+
+
+    public CardProduct() {
+        prodTimeAdded = LocalDateTime.now();
+    }
+
+    public CardProduct(int quantity, LocalDateTime prodTimeAdded, OrderStatus producStatus) {
+        this.quantity = quantity;
+        this.prodTimeAdded = prodTimeAdded;
+        this.producStatus = producStatus;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public LocalDateTime getProdTimeAdded() {
+        return prodTimeAdded;
+    }
+
+    public void setProdTimeAdded(LocalDateTime prodTimeAdded) {
+        this.prodTimeAdded = prodTimeAdded;
+    }
+    
+
+    public String getFormattedDate(){
+        return DateTimeFormatter.ofPattern("dd-MM-yyyy").format(prodTimeAdded);
+    }
+
+    public String getFormattedTime(){
+        return DateTimeFormatter.ofPattern("hh:mm").format(prodTimeAdded);
+    }
+
+    public OrderStatus getProducStatus() {
+        return producStatus;
+    }
+
+    public void setProducStatus(OrderStatus producStatus) {
+        this.producStatus = producStatus;
+    }
+
+    // public CardProduct(int id, String productName, String description, double price, int stock, Category category,
+    //         Seller selller, int quantity, LocalDateTime prodTimeAdded) {
+    //     super(id, productName, description, price, stock, category, selller);
+    //     this.quantity = quantity;
+    //     this.prodTimeAdded = prodTimeAdded;
+    // }
+    
+    // public boolean canAddToCard(){
+    //     return getStock()>=getQuantity();
+    // }
+    
+}
