@@ -1,19 +1,25 @@
 package zohoincubation.com.zoho.ecommerce.src.model;
 
-public class User {
+import java.util.Scanner;
+
+import zohoincubation.com.zoho.ecommerce.src.view.Operation;
+
+public abstract class User {
 
     private int id;
     private String name;
+    private String phone;
     private String email;
     private String password;
     private String gender;
-    
-    public User() {
+    protected Operation[] operations;
+    public User(){
     }
     
-    public User(int id, String name, String email, String password, String gender) {
+    public User(int id, String name,String phone, String email, String password, String gender) {
         this.id = id;
         this.name = name;
+        this.phone = phone;
         this.email = email;
         this.password = password;
         this.gender = gender;
@@ -25,6 +31,9 @@ public class User {
 
     public String getName() {
         return name;
+    }
+    public String getPhone() {
+        return phone;
     }
 
     public String getEmail() {
@@ -46,6 +55,9 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -58,5 +70,28 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+    public void showMenu(Scanner sc,User loggedInUser){
+        while(true){
+            for(int i = 0; i < operations.length; i++){
+                System.out.println((i+1)+"."+operations[i].getfunctionName());
+            }
+            System.out.println("Enter a Choice - Zero(0) to Exit");
+            int choice = sc.nextInt(); 
+            sc.nextLine();
+            if(choice == 0){
+                System.out.println("Exiting to previous menu.");
+                return;
+            }
+            if(choice < 1 || choice > operations.length){
+                System.out.println("Invalid Choice");
+                continue;
+            }
+
+            else{
+                operations[choice-1].operation(sc,loggedInUser);
+            }
+        }     
+    }
+    public abstract int getRole();
   
 }

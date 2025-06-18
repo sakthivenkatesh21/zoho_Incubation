@@ -9,7 +9,7 @@ public class Navigation {
         sc = new Scanner(System.in);
     }
     
-    public static void menu(){
+    public  void menu(){
         System.out.println("Welcome to E - Commerce ");
         while(true){
             System.out.println("1.SigUP\n2.SignIN\n3.Exit");
@@ -18,13 +18,14 @@ public class Navigation {
             sc.nextLine();
             switch (choice) {
                 case 1:
-                    new SignUp().createUser(sc);
+                    new SignUp().createUser(sc,this);
                     break;
                 case 2:
-                    new LogIn().logIn(sc);
+                    new LogIn().logIn(sc,this);
+          
                     break;
                 case 3:
-                    
+                    exit(sc);
                     break;
                 default:
                 System.out.println("Invalid Choice");
@@ -32,5 +33,13 @@ public class Navigation {
             }
 
         }
+    }
+    // public void showmenu(){
+
+    // }
+    private void exit(Scanner sc) {
+        System.out.println("Thank you for using E - Commerce");
+        sc.close();
+        System.exit(0);
     }
 }

@@ -3,7 +3,11 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client {
+import zohoincubation.com.zoho.ecommerce.src.view.Operation;
+import zohoincubation.com.zoho.ecommerce.src.view.ViewCategory;
+import zohoincubation.com.zoho.ecommerce.src.view.ViewProduct;
+
+public class Client extends User {
     
     private Card card;
     private String address;
@@ -12,7 +16,14 @@ public class Client {
     
     
     public Client() {
+        this.operations = new Operation[]{
+            new ViewCategory(),
+            new ViewProduct(),
+            
+            
+        };
         previousOrderProduct = new ArrayList<>();
+       
     }
 
     public Client(Card card, String address, String paymentDetails, List<Order> previousOrderProduct) {
@@ -54,6 +65,8 @@ public class Client {
         this.previousOrderProduct = previousOrderProduct;
     }
 
-    
+    public int getRole(){
+        return 1;
+    }
     
 }

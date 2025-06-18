@@ -10,8 +10,11 @@ public class CardProduct  extends Product{
     private OrderStatus producStatus;
 
 
-    public CardProduct() {
+    public CardProduct(int id,Product product, int quantity) {
+        super(id,product.getProductName(), product.getDescription(), product.getPrice(), product.getStock(), product.getCategory(), product.getSeller());
+        this.quantity = quantity;
         prodTimeAdded = LocalDateTime.now();
+        producStatus = OrderStatus.PENDING;
     }
 
     public CardProduct(int quantity, LocalDateTime prodTimeAdded, OrderStatus producStatus) {
@@ -60,8 +63,8 @@ public class CardProduct  extends Product{
     //     this.prodTimeAdded = prodTimeAdded;
     // }
     
-    // public boolean canAddToCard(){
-    //     return getStock()>=getQuantity();
-    // }
+    public boolean canAddToCard(){
+        return getStock()>=getQuantity();
+    }
     
 }

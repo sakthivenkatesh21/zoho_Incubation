@@ -8,20 +8,20 @@ public class Product {
     private double price;
     private int stock;
     private Category category;
-    private Seller selller;
+    private Seller seller;
     
     public Product() {
     }
 
     public Product(int id, String productName, String description, double price, int stock, Category category,
-            Seller selller) {
+            Seller seller) {
         this.id = id;
         this.productName = productName;
         this.description = description;
         this.price = price;
         this.stock = stock;
         this.category = category;
-        this.selller = selller;
+        this.seller = seller;
     }
 
     public int getId() {
@@ -76,12 +76,24 @@ public class Product {
         this.category = category;
     }
 
-    public Seller getSelller() {
-        return selller;
+    public Seller getSeller() {
+        return seller;
     }
 
-    public void setSelller(Seller selller) {
-        this.selller = selller;
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    @Override
+    public String toString() {
+        System.out.println("Product ID: " + getId());
+        System.out.println("Product Name: " + getProductName());
+        System.out.println("Product Price: " + getPrice());
+        System.out.println("Product Quantity: " + getStock());
+        System.out.println("Product Description: " + getDescription());
+        System.out.println("Seller Name: " + getSeller().getName());
+        System.out.println("-----------------------------");
+        return"";
     }
 
 }

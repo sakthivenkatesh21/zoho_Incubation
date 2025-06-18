@@ -1,10 +1,14 @@
 package zohoincubation.com.zoho.ecommerce.src.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
     private List<Product> product;
 
+    public Card() {
+        product = new ArrayList<>();
+    }
     public Card(List<Product> product) {
         this.product = product;
     }

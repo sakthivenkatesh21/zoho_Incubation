@@ -53,4 +53,9 @@ public class Category {
         this.product = product;
     }
 
+    @Override
+    public String toString() {
+        return "\n CategoryId=" + id + ",\n Name=" + name + ",\n Description=" + description + "\n";
+    }
+
 }

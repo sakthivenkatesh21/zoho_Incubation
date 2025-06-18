@@ -2,11 +2,12 @@ package zohoincubation.com.zoho.ecommerce.src.view;
 
 import java.util.Scanner;
 
-import zohoincubation.com.zoho.ecommerce.src.controller.DataManager;
+import zohoincubation.com.zoho.ecommerce.src.controller.UserController;
 
 public class SignUp {
     
-    public void createUser(Scanner sc ){
+    public void createUser(Scanner sc, Navigation navigation) {
+
         System.out.println("Enter a Name ");
         String name = sc.nextLine();
         System.out.println("Enter a Mobile Number");
@@ -17,11 +18,27 @@ public class SignUp {
         String password = sc.nextLine();
         System.out.println("Enter a Gender");
         String gender = sc.nextLine();
-        System.out.println("Enter that Customer or Seller");
-        System.out.println("1.Customer\n2.Seller");
-        if(sc.nextInt()==1){
-            Seller
+        
+        System.out.println("Are you Sigining Up as  Client or Seller ?\n 1.Client\n 2.Seller");
+        int  userType = sc.nextInt();
+        sc.nextLine();
+
+        if(userType==1){
+            System.out.println("Enter a Address");
+            String address = sc.nextLine();
+            System.out.println("Enter a Payment Details");
+            String paymentDetails = sc.nextLine();
+            UserController.createUser(name,phone,email,password,gender,address,paymentDetails);
         }
+        else{
+            // System.out.println("Enter a Company Name (If you are a Seller)");
+            // String company = sc.nextLine();
+            // System.out.println("Enter a Company Address (If you are a Seller)");
+            // String companyAddress = sc.nextLine();
+            UserController.createUser(name, phone, email, password, gender);
+        }
+        
+
    
 
 

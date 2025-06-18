@@ -3,7 +3,13 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Seller  {
+import zohoincubation.com.zoho.ecommerce.src.view.AddCategory;
+import zohoincubation.com.zoho.ecommerce.src.view.AddProduct;
+import zohoincubation.com.zoho.ecommerce.src.view.Operation;
+import zohoincubation.com.zoho.ecommerce.src.view.ViewCategory;
+import zohoincubation.com.zoho.ecommerce.src.view.ViewProduct;
+
+public class Seller extends User {
     
     private int soldItem;
     private double profit;
@@ -13,6 +19,13 @@ public class Seller  {
     private List<Order> saledList; 
     
     public Seller(){
+        this.operations = new Operation[]{
+            new AddCategory(),
+            new ViewCategory(),
+            new AddProduct(),
+            new ViewProduct(),
+            
+        };
         sellerProduct = new ArrayList<>();
     }
 
@@ -74,6 +87,9 @@ public class Seller  {
         this.saledList = saledList;
     }
 
+    public int getRole(){
+        return 2;
+    }
     
 
 }
