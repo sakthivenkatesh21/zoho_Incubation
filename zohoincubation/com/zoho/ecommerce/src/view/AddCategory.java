@@ -8,7 +8,7 @@ import zohoincubation.com.zoho.ecommerce.src.model.User;
 public class AddCategory implements Operation {
    
         @Override
-        public  String getfunctionName () {
+        public   String getfunctionName () {
             return "Add Category";
         }
 
@@ -22,6 +22,6 @@ public class AddCategory implements Operation {
             if(CategoryController.createCategory(categoryName, categoryDescription)!=null)
                 System.out.println("Category Created Successfully");
             else 
-                System.out.println("Category Creation Failed");            
+                System.out.println("Category with name '" + categoryName + "' already exists.");
         }
 }

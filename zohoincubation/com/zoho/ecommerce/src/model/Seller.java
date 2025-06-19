@@ -5,6 +5,7 @@ import java.util.List;
 
 import zohoincubation.com.zoho.ecommerce.src.view.AddCategory;
 import zohoincubation.com.zoho.ecommerce.src.view.AddProduct;
+import zohoincubation.com.zoho.ecommerce.src.view.CheckOut;
 import zohoincubation.com.zoho.ecommerce.src.view.Operation;
 import zohoincubation.com.zoho.ecommerce.src.view.ViewCategory;
 import zohoincubation.com.zoho.ecommerce.src.view.ViewProduct;
@@ -16,9 +17,31 @@ public class Seller extends User {
     private String company;
     private String companyAddress;
     private List<Product> sellerProduct;
-    private List<Order> saledList; 
+    private List<CardProduct> saledList; 
     
     public Seller(){
+        // this.operations = new Operation[]{
+        //     new AddCategory(),
+        //     new ViewCategory(),
+        //     new AddProduct(),
+        //     new ViewProduct(),
+        //     new CheckOut(),
+            
+        // };
+    }
+
+    public Seller(int id, String name,String phone, String email,
+                    String password, String gender,int soldItem, 
+                    double profit, String company, String companyAddress){
+        super(id, name, phone, email, password, gender);
+        this.soldItem = soldItem;
+        this.profit = profit;
+        this.company = company;
+        this.companyAddress = companyAddress;
+        this.sellerProduct = new ArrayList<>();;
+        this.saledList = new ArrayList<>();;
+    }
+    private void list(){
         this.operations = new Operation[]{
             new AddCategory(),
             new ViewCategory(),
@@ -26,17 +49,12 @@ public class Seller extends User {
             new ViewProduct(),
             
         };
-        sellerProduct = new ArrayList<>();
     }
-
-    public Seller(int soldItem, double profit, String company, String companyAddress, List<Product> sellerProduct,
-            List<Order> saledList) {
-        this.soldItem = soldItem;
-        this.profit = profit;
-        this.company = company;
-        this.companyAddress = companyAddress;
-        this.sellerProduct = sellerProduct;
-        this.saledList = saledList;
+    protected Operation[] getOperations() {
+        if (this.operations == null) {
+            list();
+        }
+        return this.operations;
     }
 
     public int getSoldItem() {
@@ -79,11 +97,11 @@ public class Seller extends User {
         this.sellerProduct = sellerProduct;
     }
 
-    public List<Order> getSaledList() {
+    public List<CardProduct> getSaledList() {
         return saledList;
     }
 
-    public void setSaledList(List<Order> saledList) {
+    public void setSaledList(List<CardProduct> saledList) {
         this.saledList = saledList;
     }
 
@@ -91,5 +109,14 @@ public class Seller extends User {
         return 2;
     }
     
-
+    public String toString() {
+        return "Seller ID : " + getId() + "\n" +
+               "Name : " + getName() + "\n" +
+               "Phone : " + getPhone() + "\n" +
+               "Email : " + getEmail() + "\n" +
+               "Company : " + company + "\n" +
+               "Company Address : " + companyAddress + "\n" +
+               "Sold Items : " + soldItem + "\n" +
+               "Profit : " + profit;
+    }
 }

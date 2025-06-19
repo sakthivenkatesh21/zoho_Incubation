@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 import zohoincubation.com.zoho.ecommerce.src.controller.SignIn;
 
-// import zohoincubation.com.zoho.ecommerce.src.model.Client;
-// import zohoincubation.com.zoho.ecommerce.src.model.Seller;
+import zohoincubation.com.zoho.ecommerce.src.model.Client;
+import zohoincubation.com.zoho.ecommerce.src.model.Seller;
 import zohoincubation.com.zoho.ecommerce.src.model.User;
 
 public class LogIn {
@@ -23,8 +23,10 @@ public class LogIn {
             System.out.println("Welcome " + logInUser.getName() + " to the E-Commerce Application");
            if (logInUser.getRole() == 1) {
                System.out.println("Login as Client");
+                Client client = new Client();
            } else if (logInUser.getRole() == 2) {
                System.out.println("Login as Seller");
+                Seller seller = new Seller();
            } else {
                System.out.println("Invalid Role");
                return;

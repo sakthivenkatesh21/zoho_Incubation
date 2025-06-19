@@ -7,15 +7,15 @@ import zohoincubation.com.zoho.ecommerce.src.model.Category;
 public class CategoryController {
     private static List<Category> category = DataManager.getDataManager().getCategory();
     private static int idGenerator;
+
     public static boolean isCategoryEmpty() {
         return category.isEmpty();
     }
 
     public static boolean isCategoryExists(String categoryName) {
         for (Category obj : category) {
-            if (obj.getName().equalsIgnoreCase(categoryName)) {
+            if (obj.getName().equalsIgnoreCase(categoryName)) 
                 return true;
-            }
         }
         return false;
     }
@@ -26,13 +26,9 @@ public class CategoryController {
 
     public static Category createCategory(String categoryName, String categoryDescription) {
         if (isCategoryExists(categoryName)) {
-            System.out.println("Category with name '" + categoryName + "' already exists.");
             return null;
         }
-        Category newCategory = new Category();
-        newCategory.setId(++idGenerator);
-        newCategory.setName(categoryName);
-        newCategory.setDescription(categoryDescription);
+        Category newCategory = new Category(++idGenerator,categoryName,categoryDescription);
         category.add(newCategory);
         return newCategory;
     }

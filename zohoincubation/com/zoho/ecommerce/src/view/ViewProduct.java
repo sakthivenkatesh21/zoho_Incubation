@@ -82,8 +82,7 @@ public class ViewProduct implements Operation {
         System.out.println("Products in Category: " + category.getName()+"\n");
         for(Product product : category.getProduct()) {
             System.out.println(product);
-        }
-        
+        }     
     }
   
 }

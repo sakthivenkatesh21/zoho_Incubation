@@ -30,12 +30,16 @@ public class SignUp {
             String paymentDetails = sc.nextLine();
             UserController.createUser(name,phone,email,password,gender,address,paymentDetails);
         }
+        else if(userType ==2 ){
+            System.out.println("Enter a Company Name (If you are a Seller)");
+            String company = sc.nextLine();
+            System.out.println("Enter a Company Address (If you are a Seller)");
+            String companyAddress = sc.nextLine();
+            UserController.createUser(name, phone, email, password, gender,0,0,company,companyAddress);
+        }
         else{
-            // System.out.println("Enter a Company Name (If you are a Seller)");
-            // String company = sc.nextLine();
-            // System.out.println("Enter a Company Address (If you are a Seller)");
-            // String companyAddress = sc.nextLine();
-            UserController.createUser(name, phone, email, password, gender);
+            System.out.println("Inavalid User");
+            return;
         }
         
 

@@ -11,14 +11,13 @@ public class Category {
     private List<Product> product;
 
     public Category(){
-        product = new ArrayList<>();
     }
 
-    public Category(int id, String name, String description, List<Product> product) {
+    public Category(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.product = product;
+        this.product = new ArrayList<>();
     }
 
     public int getId() {
@@ -55,7 +54,11 @@ public class Category {
 
     @Override
     public String toString() {
-        return "\n CategoryId=" + id + ",\n Name=" + name + ",\n Description=" + description + "\n";
+            System.out.println("Category ID : " + id);
+            System.out.println("Category Name : " + name);
+            System.out.println("Category Description : " + description);
+            return"";
+
     }
 
 }

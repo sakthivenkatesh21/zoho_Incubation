@@ -33,7 +33,8 @@ public class AddCard implements Operation {
         CardProduct cardProduct =  new CardProduct(card.getProduct().size()+1, product, quantity) ; 
         if(cardProduct.canAddToCard()){
             card.getProduct().add(cardProduct);
-            System.out.println("Product added to the cart successfully: " + product.getProductName());
+            product.setStock(product.getStock()-quantity); 
+            System.out.println("Product added to the cart successfully: " + product.getProductName());       
         } else {
             System.out.println("Cannot add product to the cart. Please check the stock availability.");
         }

@@ -7,7 +7,7 @@ import zohoincubation.com.zoho.ecommerce.src.controller.ProductController;
 import zohoincubation.com.zoho.ecommerce.src.model.Category;
 import zohoincubation.com.zoho.ecommerce.src.model.Product;
 import zohoincubation.com.zoho.ecommerce.src.model.User;
-import zohoincubation.com.zoho.ecommerce.src.model.Seller;
+
 import zohoincubation.com.zoho.ecommerce.src.model.Client;
 
 

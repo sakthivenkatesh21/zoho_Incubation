@@ -1,0 +1,33 @@
+package zohoincubation.com.zoho.ecommerce.src.view;
+
+
+import zohoincubation.com.zoho.ecommerce.src.model.Order;
+import zohoincubation.com.zoho.ecommerce.src.model.OrderStatus;
+
+class OrderStatusUpdate {
+
+    private static void printOrderStatus(String productName, int orderId, String transactionId, String status) {
+        System.out.println("""
+            ======================================
+            📦 Client Name   : %s
+            🆔 Order ID       : %s
+            🔁 Transaction ID : %s
+            🚚 Order Status   : %s
+            ======================================
+            """.formatted(productName, orderId, transactionId, status));
+    }
+
+    public static void flow(Order order) {
+        OrderStatus[] statuses = new OrderStatus[]{OrderStatus.CONFIRMED, OrderStatus.SHIPPED, OrderStatus.DELIVERED};
+
+        for (OrderStatus status : statuses) {
+            printOrderStatus(order.getClient().getName(), order.getId(), order.getPayment(), status.toString());
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                System.out.println("⚠️ Status update interrupted.");
+            }
+        }
+    }
+}
+ 

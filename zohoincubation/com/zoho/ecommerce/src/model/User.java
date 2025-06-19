@@ -70,10 +70,12 @@ public abstract class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
     public void showMenu(Scanner sc,User loggedInUser){
         while(true){
-            for(int i = 0; i < operations.length; i++){
-                System.out.println((i+1)+"."+operations[i].getfunctionName());
+
+            for(int i = 0; i < this.getOperations().length; i++){
+                System.out.println((i+1)+"."+this.operations[i].getfunctionName());
             }
             System.out.println("Enter a Choice - Zero(0) to Exit");
             int choice = sc.nextInt(); 
@@ -92,6 +94,7 @@ public abstract class User {
             }
         }     
     }
+    protected abstract Operation[] getOperations();
     public abstract int getRole();
   
 }

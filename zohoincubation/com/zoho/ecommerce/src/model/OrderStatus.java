@@ -1,24 +1,21 @@
 package zohoincubation.com.zoho.ecommerce.src.model;
 
-public  enum OrderStatus {
-    
-    SHIPPED,DELEVIRED,PENDING;
+public enum OrderStatus {
+    PENDING("⏳ Pending"),
+    CONFIRMED("✅ Confirmed"),
+    SHIPPED("🚚 Shipped"),
+    DELIVERED("📬 Delivered"),
+   ;
 
-    public String get(){
-        switch (this) {
-            case SHIPPED:
-                return "SHIPPED";
-                
-            case DELEVIRED:
-                return "DELEVIRED";
+    private final String label;
 
-            case PENDING:
-                return "PENDING";
-        
-            default:
-                return "Invalid Input";
-        }
+    OrderStatus(String label) {
+        this.label = label;
     }
 
+    public String getLabel() {
+        return label;
+    }
 }
+
 

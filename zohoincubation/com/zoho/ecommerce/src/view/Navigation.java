@@ -34,9 +34,6 @@ public class Navigation {
 
         }
     }
-    // public void showmenu(){
-
-    // }
     private void exit(Scanner sc) {
         System.out.println("Thank you for using E - Commerce");
         sc.close();

@@ -8,30 +8,54 @@ import zohoincubation.com.zoho.ecommerce.src.model.User;
 
 public class UserController {
     private static int idGenerator;
-    private static User user;
     private static List<User> userList = DataManager.getDataManager().getUser();
 
     public static void createUser(String name,String phone, String email,String password,String gender,String address,String paymentDetails){
-        user = new Client();
-        user.setId(++idGenerator);
-        user.setName(name);
-        user.setPhone(phone);
-        user.setEmail(email);
-        user.setPassword(password);
-        ((Client)user).setAddress(address);
-        ((Client)user).setPaymentDetails(paymentDetails);
+        // Client s = new Client();
+        // Seller c = new Seller();
+        User user = new Client(++idGenerator,name,phone,email,password,gender,address,paymentDetails);
         userList.add(user);
+    }
+    public static void createUser(String name,String phone, String email,String password,String gender,int soldItem,int profit,String company,String companyAddress){
+        User user = new Seller(++idGenerator,name,phone,email,password,gender,soldItem,profit,company,companyAddress);
+        userList.add(user);
+    }
 
-    }
-    public static void createUser(String name,String phone, String email,String password,String gender){
-        user = new Seller();
-        user.setId(++idGenerator);
-        user.setName(name);
-        user.setPhone(phone);
-        user.setEmail(email);
-        user.setPassword(password);
-        userList.add(user);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     // private static int idGenerator(){
     //     Random rand = new Random();
     //     int id; 

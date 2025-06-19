@@ -15,16 +15,7 @@ public class ProductController {
         if(isProductExists(productName)) {
             return null;
         }
-
-        Product newProduct = new Product();
-        newProduct.setId(++idGenerator);
-        newProduct.setProductName(productName);
-        newProduct.setDescription(productDescription);
-        newProduct.setPrice(price);
-        newProduct.setStock(stock); 
-        newProduct.setCategory(category);
-        newProduct.setSeller((Seller)loggedInUser);
-
+        Product newProduct = new Product(++idGenerator,productName,productDescription,price,stock,category,(Seller)loggedInUser);
         products.add(newProduct);
         category.getProduct().add(newProduct);
         return newProduct;
@@ -46,29 +37,4 @@ public class ProductController {
         }
         return false;
     }
-
-
-
-
-
-
-    // private static int idGenerator(){
-    //     Random rand = new Random();
-    //     int id; 
-    //     do{
-    //         id = rand.nextInt(1,99);
-    //     }while(!uniqueId(id));
-    //     return id; 
-    // }
-    // private static boolean uniqueId(int id){
-    //     if(products.isEmpty()){
-    //         return true;
-    //     }
-    //     for(Product obj : products){
-    //         if(obj.getId() == id){
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 }
