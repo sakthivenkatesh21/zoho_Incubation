@@ -2,13 +2,12 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-import zohoincubation.com.zoho.ecommerce.src.view.AddCategory;
-import zohoincubation.com.zoho.ecommerce.src.view.AddProduct;
-import zohoincubation.com.zoho.ecommerce.src.view.CheckOut;
-import zohoincubation.com.zoho.ecommerce.src.view.Operation;
-import zohoincubation.com.zoho.ecommerce.src.view.ViewCategory;
-import zohoincubation.com.zoho.ecommerce.src.view.ViewProduct;
+import zohoincubation.com.zoho.ecommerce.src.view.CategoryHelper;
+import zohoincubation.com.zoho.ecommerce.src.view.Execute;
+import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
+import zohoincubation.com.zoho.ecommerce.src.view.ProductHelper;
 
 public class Seller extends User {
     
@@ -19,16 +18,7 @@ public class Seller extends User {
     private List<Product> sellerProduct;
     private List<CardProduct> saledList; 
     
-    public Seller(){
-        // this.operations = new Operation[]{
-        //     new AddCategory(),
-        //     new ViewCategory(),
-        //     new AddProduct(),
-        //     new ViewProduct(),
-        //     new CheckOut(),
-            
-        // };
-    }
+    public Seller(){}
 
     public Seller(int id, String name,String phone, String email,
                     String password, String gender,int soldItem, 
@@ -41,18 +31,18 @@ public class Seller extends User {
         this.sellerProduct = new ArrayList<>();;
         this.saledList = new ArrayList<>();;
     }
-    private void list(){
-        this.operations = new Operation[]{
-            new AddCategory(),
-            new ViewCategory(),
-            new AddProduct(),
-            new ViewProduct(),
+    
+    private void list(Scanner sc, User loggedInUser){ 
+        this.operations = new Execute[]{
+            new CategoryHelper(sc, loggedInUser),       
+            new ProductHelper(sc, loggedInUser),
+            new OrderHelper(sc, loggedInUser)
             
         };
     }
-    protected Operation[] getOperations() {
+    protected Execute[] getOperations(Scanner sc, User loggedInUser) {
         if (this.operations == null) {
-            list();
+            list(sc,loggedInUser);
         }
         return this.operations;
     }

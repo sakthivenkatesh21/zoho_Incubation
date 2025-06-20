@@ -4,17 +4,17 @@ public class Product {
 
     private int id;
     private String productName;
-    private String description ;
+    private String description;
     private double price;
     private int stock;
     private Category category;
     private Seller seller;
-    
+
     public Product() {
     }
-    
+
     public Product(int id, String productName, String description, double price, 
-                        int stock, Category category,Seller seller) {
+                   int stock, Category category, Seller seller) {
         this.id = id;
         this.productName = productName;
         this.description = description;
@@ -63,9 +63,9 @@ public class Product {
     public void setStock(int stock) {
         this.stock = stock;
     }
-    
-    public boolean isAvailableStock(){
-        return stock>0;
+
+    public boolean isAvailableStock() {
+        return stock > 0;
     }
 
     public Category getCategory() {
@@ -93,7 +93,6 @@ public class Product {
         System.out.println("Product Description: " + getDescription());
         System.out.println("Seller Name: " + getSeller().getName());
         System.out.println("-----------------------------");
-        return"";
+        return "";
     }
-
 }

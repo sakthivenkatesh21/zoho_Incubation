@@ -9,11 +9,11 @@ import zohoincubation.com.zoho.ecommerce.src.model.Product;
 import zohoincubation.com.zoho.ecommerce.src.model.User;
 
 public class DataManager {
-    
-    private DataManager(){
-        user     = new ArrayList<User>();
-        orders   = new ArrayList<Order>();
-        product  = new ArrayList<Product>();
+
+    private DataManager() {
+        user = new ArrayList<User>();
+        orders = new ArrayList<Order>();
+        product = new ArrayList<Product>();
         category = new ArrayList<Category>();
     }
 
@@ -23,8 +23,8 @@ public class DataManager {
     private final List<Category> category;
     private static DataManager dataManager;
 
-    public  static DataManager getDataManager(){
-        if(dataManager == null){
+    public static DataManager getDataManager() {
+        if (dataManager == null) {
             dataManager = new DataManager();
         }
         return dataManager;
@@ -45,6 +45,4 @@ public class DataManager {
     public List<Category> getCategory() {
         return category;
     }
-    
-
 }

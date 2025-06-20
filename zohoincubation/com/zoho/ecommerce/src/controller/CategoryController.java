@@ -14,8 +14,9 @@ public class CategoryController {
 
     public static boolean isCategoryExists(String categoryName) {
         for (Category obj : category) {
-            if (obj.getName().equalsIgnoreCase(categoryName)) 
+            if (obj.getName().equalsIgnoreCase(categoryName)) {
                 return true;
+            }
         }
         return false;
     }
@@ -28,35 +29,25 @@ public class CategoryController {
         if (isCategoryExists(categoryName)) {
             return null;
         }
-        Category newCategory = new Category(++idGenerator,categoryName,categoryDescription);
+        Category newCategory = new Category(++idGenerator, categoryName, categoryDescription);
         category.add(newCategory);
         return newCategory;
     }
 
+    public static Category UpdateCategory(Category obj, String categoryName, String categoryDescription) {
+        if (isCategoryExists(categoryName)) {
+            return null;
+        }
+        obj.setName(categoryName);
+        obj.setDescription(categoryDescription);
+        return obj;
+    }
 
-
-
-
-
-
-    
-    // private static int idGenerator(){
-    //     Random rand = new Random();
-    //     int id; 
-    //     do{
-    //         id = rand.nextInt(100,999);
-    //     }while(!uniqueId(id));
-    //     return id; 
-    // }
-    // private static boolean uniqueId(int id){
-    //     if(category.isEmpty()){
-    //         return true;
-    //     }
-    //     for(Category obj : category){
-    //         if(obj.getId() == id){
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
+    public static boolean removeCategory(Category obj) {
+        if (obj != null) {
+            category.remove(obj);
+            return ProductController.removeProductByCategory(obj.getProduct());
+        }
+        return false;
+    }
 }

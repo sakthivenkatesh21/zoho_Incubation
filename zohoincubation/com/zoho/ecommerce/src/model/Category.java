@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
-    
-    private int id ;
-    private String name ;
+
+    private int id;
+    private String name;
     private String description;
     private List<Product> product;
 
-    public Category(){
+    public Category() {
     }
 
     public Category(int id, String name, String description) {
@@ -54,11 +54,9 @@ public class Category {
 
     @Override
     public String toString() {
-            System.out.println("Category ID : " + id);
-            System.out.println("Category Name : " + name);
-            System.out.println("Category Description : " + description);
-            return"";
-
+        System.out.println("Category ID : " + id);
+        System.out.println("Category Name : " + name);
+        System.out.println("Category Description : " + description);
+        return "";
     }
-
 }

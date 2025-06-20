@@ -3,18 +3,20 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class CardProduct  extends Product{
-    
+public class CardProduct extends Product {
+
     private int quantity;
     private LocalDateTime prodTimeAdded;
     private OrderStatus producStatus;
-    
-    public CardProduct(){}
-    public CardProduct(int id,Product product, int quantity) {
-        super(id,product.getProductName(), product.getDescription(), product.getPrice(), product.getStock(), product.getCategory(), product.getSeller());
+
+    public CardProduct() {}
+
+    public CardProduct(int id, Product product, int quantity) {
+        super(id, product.getProductName(), product.getDescription(), product.getPrice(), 
+              product.getStock(), product.getCategory(), product.getSeller());
         this.quantity = quantity;
-        prodTimeAdded = LocalDateTime.now();
-        producStatus = OrderStatus.PENDING; 
+        this.prodTimeAdded = LocalDateTime.now();
+        this.producStatus = OrderStatus.PENDING;
     }
 
     public CardProduct(int quantity, LocalDateTime prodTimeAdded, OrderStatus producStatus) {
@@ -38,13 +40,12 @@ public class CardProduct  extends Product{
     public void setProdTimeAdded(LocalDateTime prodTimeAdded) {
         this.prodTimeAdded = prodTimeAdded;
     }
-    
 
-    public String getFormattedDate(){
+    public String getFormattedDate() {
         return DateTimeFormatter.ofPattern("dd-MM-yyyy").format(prodTimeAdded);
     }
 
-    public String getFormattedTime(){
+    public String getFormattedTime() {
         return DateTimeFormatter.ofPattern("hh:mm").format(prodTimeAdded);
     }
 
@@ -56,18 +57,11 @@ public class CardProduct  extends Product{
         this.producStatus = producStatus;
     }
 
-    // public CardProduct(int id, String productName, String description, double price, int stock, Category category,
-    //         Seller selller, int quantity, LocalDateTime prodTimeAdded) {
-    //     super(id, productName, description, price, stock, category, selller);
-    //     this.quantity = quantity;
-    //     this.prodTimeAdded = prodTimeAdded;
-    // }
-    
-    public boolean canAddToCard(){
-        return getStock()>=getQuantity();
+    public boolean canAddToCard() {
+        return getStock() >= getQuantity();
     }
-    public void reStock(){
-        setStock(getQuantity()+getStock());
+
+    public void reStock() {
+        setStock(getQuantity() + getStock());
     }
-    
 }

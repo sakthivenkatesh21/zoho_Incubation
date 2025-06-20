@@ -2,11 +2,12 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-import zohoincubation.com.zoho.ecommerce.src.view.CheckOut;
-import zohoincubation.com.zoho.ecommerce.src.view.Operation;
-import zohoincubation.com.zoho.ecommerce.src.view.ViewCategory;
-import zohoincubation.com.zoho.ecommerce.src.view.ViewProduct;
+import zohoincubation.com.zoho.ecommerce.src.view.Execute;
+import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
+import zohoincubation.com.zoho.ecommerce.src.view.ProductHelper;
+import zohoincubation.com.zoho.ecommerce.src.view.WishlistHandler;
 
 public class Client extends User {
     
@@ -16,14 +17,7 @@ public class Client extends User {
     private List<Order> previousOrderProduct;
     
     
-    public Client() {
-        // this.operations = new Operation[]{
-        //     new ViewCategory(),
-        //     new ViewProduct(),
-        //     new CheckOut(),
-            
-        // };
-    }
+    public Client() {}
 
     public Client(int id, String name,String phone, String email, String password, String gender, String address, String paymentDetails) {
         super(id, name, phone, email, password, gender);
@@ -33,18 +27,19 @@ public class Client extends User {
         previousOrderProduct = new ArrayList<>();
         
     }
-    private void list(){
-        this.operations = new Operation[]{
-            new ViewCategory(),
-            new ViewProduct(),
-            new CheckOut(),
+    private void list(Scanner sc , User loggedInUser){
+        this.operations = new Execute[]{
+            new ProductHelper(sc, loggedInUser),
+            new WishlistHandler(sc,loggedInUser),
+            new OrderHelper(sc, loggedInUser),
+           
             
         };
     }
 
-    protected Operation[] getOperations() {
+    protected Execute[] getOperations(Scanner sc, User loggedInUser) {
         if (operations == null) {
-            list();
+            list(sc, loggedInUser);
         }
         return operations;
     }

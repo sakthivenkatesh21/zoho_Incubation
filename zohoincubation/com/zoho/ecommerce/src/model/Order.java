@@ -13,16 +13,14 @@ public class Order {
     private OrderStatus status;
     private double total;
     private String payment;
-    // private List<Seller> seller;
-    private List<CardProduct> product; 
+    private List<CardProduct> product;
 
-
-    public Order(){
-        // this.seller = new ArrayList<>();
-        this.product = new ArrayList<>();   
+    public Order() {
+        this.product = new ArrayList<>();
     }
-    public Order(int id, Client client,String address, OrderStatus status, double total,
-            String payment,/*List<Seller> seller,*/  List<CardProduct> product) {
+
+    public Order(int id, Client client, String address, OrderStatus status, double total,
+                 String payment, List<CardProduct> product) {
         this.id = id;
         this.client = client;
         this.address = address;
@@ -30,16 +28,17 @@ public class Order {
         this.status = status;
         this.total = total;
         this.payment = payment;
-        // this.seller = seller;
         this.product = product;
     }
 
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
+
     public int getId() {
         return id;
     }
@@ -47,14 +46,6 @@ public class Order {
     public void setId(int id) {
         this.id = id;
     }
-
-    // public List<Seller>  getSeller() {
-    //     return seller;
-    // }
-
-    // public void setSeller(List<Seller> seller) {
-    //     this.seller = seller;
-    // }
 
     public Client getClient() {
         return client;
@@ -99,31 +90,28 @@ public class Order {
     public List<CardProduct> getProduct() {
         return product;
     }
-    public String getFormattedDate(){
-        return DateTimeFormatter.ofPattern("dd-MM-yyyy").format(orderTime);
-    }
-
-    public String getFormattedTime(){
-        return DateTimeFormatter.ofPattern("hh:mm").format(orderTime);
-    }
 
     public void setProduct(List<CardProduct> product) {
         this.product = product;
     }
 
-    // public double claculateOrderTotal(){
-    //     double total  =0;
-    //     for(Product prod : product)
-    //         total +=prod.getStock()*prod.getPrice();
-    //     return total;    
-    // }
-    private String  print (){
+    public String getFormattedDate() {
+        return DateTimeFormatter.ofPattern("dd-MM-yyyy").format(orderTime);
+    }
+
+    public String getFormattedTime() {
+        return DateTimeFormatter.ofPattern("hh:mm").format(orderTime);
+    }
+
+    private String print() {
         StringBuilder sb = new StringBuilder();
         for (CardProduct prod : product) {
             sb.append(String.format("🛍️ %s (Qty: %d, Price: $%.2f)\n", prod.getProductName(), prod.getQuantity(), prod.getPrice()));
         }
         return sb.toString();
     }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("--------------------------------------------------\n");
@@ -140,9 +128,4 @@ public class Order {
         sb.append("--------------------------------------------------\n");
         return sb.toString();
     }
-
-    
-    
-
-
 }

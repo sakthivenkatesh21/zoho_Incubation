@@ -1,6 +1,6 @@
 package zohoincubation.com.zoho.ecommerce.src.internal;
 
-import zohoincubation.com.zoho.ecommerce.src.view.IPaymentGateway;
+import zohoincubation.com.zoho.ecommerce.src.paymentCreditionals.IPaymentGateway;
 
 public class Paytm implements IPaymentGateway {
     private double amount;
@@ -24,10 +24,11 @@ public class Paytm implements IPaymentGateway {
             if (walletId == null || walletId.isEmpty()) {
                 throw new IllegalArgumentException("Wallet ID is required for payment processing.");
             }
+
             System.out.println("Processing payment of " + amount + " using " + paymentMethod + " with wallet ID: " + walletId + ".");
             System.out.println("Payment processed successfully.");
             Thread.sleep(2000);
-            
+
         } catch (IllegalArgumentException | InterruptedException e) {
             if (e instanceof InterruptedException) {
                 System.out.println("Payment process was interrupted. Please try again.");
@@ -50,6 +51,6 @@ public class Paytm implements IPaymentGateway {
             return null;
         }
 
-        return"✅"+paymentMethod+" confirmed. Transaction ID: " + transactionId;
+        return "✅" + paymentMethod + " confirmed. Transaction ID: " + transactionId;
     }
 }

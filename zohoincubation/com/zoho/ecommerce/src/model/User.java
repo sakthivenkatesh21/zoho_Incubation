@@ -2,7 +2,7 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 
 import java.util.Scanner;
 
-import zohoincubation.com.zoho.ecommerce.src.view.Operation;
+import zohoincubation.com.zoho.ecommerce.src.view.Execute;
 
 public abstract class User {
 
@@ -12,7 +12,7 @@ public abstract class User {
     private String email;
     private String password;
     private String gender;
-    protected Operation[] operations;
+    protected Execute[] operations;
     public User(){
     }
     
@@ -74,7 +74,7 @@ public abstract class User {
     public void showMenu(Scanner sc,User loggedInUser){
         while(true){
 
-            for(int i = 0; i < this.getOperations().length; i++){
+            for(int i = 0; i < this.getOperations(sc,loggedInUser).length; i++){
                 System.out.println((i+1)+"."+this.operations[i].getfunctionName());
             }
             System.out.println("Enter a Choice - Zero(0) to Exit");
@@ -94,7 +94,7 @@ public abstract class User {
             }
         }     
     }
-    protected abstract Operation[] getOperations();
+    protected abstract Execute[] getOperations(Scanner sc ,User loggedInUser);
     public abstract int getRole();
   
 }

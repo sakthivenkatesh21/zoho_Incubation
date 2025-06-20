@@ -10,8 +10,9 @@ import zohoincubation.com.zoho.ecommerce.src.model.OrderStatus;
 import zohoincubation.com.zoho.ecommerce.src.model.User;
 
 public class OrderController {
-      private static int  idGenerator;
-      private static List<Order> orders = DataManager.getDataManager().getOrders();
+   
+    private static int  idGenerator;
+    private static List<Order> orders = DataManager.getDataManager().getOrders();
 
     public static boolean isOrderEmpty() {
         return orders.isEmpty();
@@ -32,4 +33,6 @@ public class OrderController {
             product.getSeller().getSaledList().add(product);
         }
     }
+
+
 }

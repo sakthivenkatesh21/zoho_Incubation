@@ -9,6 +9,7 @@ public class Card {
     public Card() {
         product = new ArrayList<>();
     }
+
     public Card(List<CardProduct> product) {
         this.product = product;
     }
@@ -21,12 +22,11 @@ public class Card {
         this.product = product;
     }
 
-    public double claculateCardTotal(){
-        double total  =0;
-        for(CardProduct prod : product)
-            total +=prod.getQuantity()*prod.getPrice();
-        return total;    
+    public double calculateCardTotal() {
+        double total = 0;
+        for (CardProduct prod : product) {
+            total += prod.getQuantity() * prod.getPrice();
+        }
+        return total;
     }
-
-    
 }

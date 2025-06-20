@@ -1,6 +1,5 @@
 package zohoincubation.com.zoho.ecommerce.src.view;
 
-
 import zohoincubation.com.zoho.ecommerce.src.model.Order;
 import zohoincubation.com.zoho.ecommerce.src.model.OrderStatus;
 
@@ -18,10 +17,14 @@ class OrderStatusUpdate {
     }
 
     public static void flow(Order order) {
-        OrderStatus[] statuses = new OrderStatus[]{OrderStatus.CONFIRMED, OrderStatus.SHIPPED, OrderStatus.DELIVERED};
+        String[] statuses = new String[]{
+            OrderStatus.PENDING.getLabel(),
+            OrderStatus.SHIPPED.getLabel(),
+            OrderStatus.DELIVERED.getLabel()
+        };
 
-        for (OrderStatus status : statuses) {
-            printOrderStatus(order.getClient().getName(), order.getId(), order.getPayment(), status.toString());
+        for (String status : statuses) {
+            printOrderStatus(order.getClient().getName(), order.getId(), order.getPayment(), status);
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
@@ -30,4 +33,3 @@ class OrderStatusUpdate {
         }
     }
 }
- 
