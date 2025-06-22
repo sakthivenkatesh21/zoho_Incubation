@@ -1,5 +1,6 @@
 package zohoincubation.com.zoho.ecommerce.src.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import zohoincubation.com.zoho.ecommerce.src.model.Category;
@@ -12,7 +13,7 @@ public class ProductController {
     private static List<Product> products = DataManager.getDataManager().getProduct();
 
     public static Product createProduct(String productName, String productDescription, double price, int stock, Category category, User loggedInUser) {
-        if (isProductExists(productName) == null) {
+        if (!products.isEmpty() && isProductExists(productName,loggedInUser) != null) {
             return null;
         }
         Product newProduct = new Product(++idGenerator, productName, productDescription, price, stock, category, (Seller) loggedInUser);
@@ -54,17 +55,27 @@ public class ProductController {
         return null;
     }
 
-    public static Product isProductExists(String productName) {
+    public static Product isProductExists(String productName, User loggedInUser) {
         for (Product obj : products) {
-            if (obj.getProductName().equals(productName)) {
+            if (obj.getProductName().equals(productName) && obj.getSeller().getId() == loggedInUser.getId()) {
                 return obj;
             }
         }
         return null;
     }
+    public static List<Product> isProductExists(String productName) {
+        List<Product> searchProducts = new ArrayList<>();
+        for (Product obj : products) {
+            if (obj.getProductName().equals(productName)) {
+                searchProducts.add(obj);
+            }
+        }
+        return searchProducts.isEmpty() ? null : searchProducts;
+    }
+      
 
     public static boolean removeProductByCategory(List<Product> productList) {
-        if (!productList.isEmpty()) {
+        if (productList.isEmpty()) {
             for (Product obj : productList) {
                 if (products.contains(obj)) {
                     products.remove(obj);
@@ -73,5 +84,14 @@ public class ProductController {
             return true;
         }
         return false;
+    }
+    public static List<Product> getSellerProducts(Category category , User loggedInUser) {
+        List<Product> products = new ArrayList<>();
+         for (Product product : category.getProduct()) {
+                if (product.getSeller().getId() == ((Seller) loggedInUser).getId()) {
+                    products.add(product);
+                }
+            }
+        return products;
     }
 }

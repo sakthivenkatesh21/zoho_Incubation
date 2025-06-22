@@ -10,13 +10,13 @@ public class UserController {
     private static int idGenerator;
     private static List<User> userList = DataManager.getDataManager().getUser();
 
-    public static void createUser(String name, String phone, String email, String password, String gender, String address, String paymentDetails) {
-        User user = new Client(++idGenerator, name, phone, email, password, gender, address, paymentDetails);
+    public static void createUser(String name, String phone, String email, String password, String gender, String address) {
+        User user = new Client(++idGenerator, name, phone, email, password, gender, address);
         userList.add(user);
     }
 
-    public static void createUser(String name, String phone, String email, String password, String gender, int soldItem, int profit, String company, String companyAddress) {
-        User user = new Seller(++idGenerator, name, phone, email, password, gender, soldItem, profit, company, companyAddress);
+    public static void createUser(String name, String phone, String email, String password, String gender, String company, String companyAddress) {
+        User user = new Seller(++idGenerator, name, phone, email, password, gender, company, companyAddress);
         userList.add(user);
     }
 }

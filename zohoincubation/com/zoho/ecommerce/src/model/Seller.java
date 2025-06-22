@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.view.CategoryHelper;
-import zohoincubation.com.zoho.ecommerce.src.view.Execute;
 import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.ProductHelper;
 
@@ -21,11 +21,10 @@ public class Seller extends User {
     public Seller(){}
 
     public Seller(int id, String name,String phone, String email,
-                    String password, String gender,int soldItem, 
-                    double profit, String company, String companyAddress){
+                    String password, String gender, String company, String companyAddress){
         super(id, name, phone, email, password, gender);
-        this.soldItem = soldItem;
-        this.profit = profit;
+        this.soldItem = 0;
+        this.profit = 0;
         this.company = company;
         this.companyAddress = companyAddress;
         this.sellerProduct = new ArrayList<>();;
@@ -40,7 +39,7 @@ public class Seller extends User {
             
         };
     }
-    protected Execute[] getOperations(Scanner sc, User loggedInUser) {
+    public Execute[] getOperations(Scanner sc, User loggedInUser) {
         if (this.operations == null) {
             list(sc,loggedInUser);
         }

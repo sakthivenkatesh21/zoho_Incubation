@@ -1,4 +1,4 @@
-package zohoincubation.com.zoho.ecommerce.src.paymentCreditionals;
+package zohoincubation.com.zoho.ecommerce.src.view;
 
 import java.util.Scanner;
 

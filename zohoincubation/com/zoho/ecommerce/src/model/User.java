@@ -2,7 +2,7 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 
 import java.util.Scanner;
 
-import zohoincubation.com.zoho.ecommerce.src.view.Execute;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 
 public abstract class User {
 
@@ -94,7 +94,7 @@ public abstract class User {
             }
         }     
     }
-    protected abstract Execute[] getOperations(Scanner sc ,User loggedInUser);
+    public abstract Execute[] getOperations(Scanner sc ,User loggedInUser);
     public abstract int getRole();
   
 }

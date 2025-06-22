@@ -3,6 +3,9 @@ package zohoincubation.com.zoho.ecommerce.src.view;
 import java.util.Scanner;
 
 import zohoincubation.com.zoho.ecommerce.src.controller.CategoryController;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Editable;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Viewable;
 import zohoincubation.com.zoho.ecommerce.src.model.Category;
 import zohoincubation.com.zoho.ecommerce.src.model.User;
 
@@ -50,7 +53,7 @@ public class CategoryHelper implements Execute, Editable, Viewable {
         }
     }
 
-    public void add() {    
+    public void add() {
         Object[] data = getDetails();
         if (CategoryController.createCategory(data[0].toString(), data[1].toString()) != null)
             System.out.println("Category Created Successfully");
@@ -70,33 +73,51 @@ public class CategoryHelper implements Execute, Editable, Viewable {
     }
 
     public void update() {
+        if (CategoryController.isCategoryEmpty()) {
+            System.out.println("No categories available to update.");
+            return;
+        }
+        int categoryIndex = checkCategory();
+        if (categoryIndex == -1) {
+            System.out.println("Invalid category selected.");
+            return;
+        }
+        Category category = CategoryController.getCategories().get(categoryIndex);
+        System.out.println("You are about to update the category: " + category.getName());
         Object[] data = getDetails();
-        Category obj = CategoryController.UpdateCategory(CategoryController.getCategories().get(checkCategory()), data[0].toString(), data[1].toString());
-        if(obj == null) {
+        Category obj = CategoryController.UpdateCategory(category, data[0].toString(), data[1].toString());
+        if (obj == null) {
             System.out.println("Failed to update category. Please try again.");
         } else {
             System.out.println("Category updated successfully : \n " + obj);
         }
     }
 
-    public void delete() {   
-        System.out.println("You are about to delete a category. This action can delete Your Product List Completly. Please confirm.");
-        System.out.println("Are you sure you want to delete a category? (yes/no) || (y/n)");
+    public void delete() {
+        if (CategoryController.isCategoryEmpty()) {
+            System.out.println("No categories available to delete.");
+            return;
+        }
+        int categoryIndex = checkCategory();
+        if (categoryIndex == -1) {
+            System.out.println("Invalid category selected.");
+            return;
+        }
+        System.out.println("You have selected to delete the category: " + CategoryController.getCategories().get(categoryIndex).getName());
+        System.out.println("Are you sure you want to delete this category? \n This action can delete Your Product List Completly \n \t(yes/no) || (y/n)");
         String confirmation = sc.nextLine().trim().toLowerCase();
-        if(!confirmation.equals("yes") && !confirmation.equals("y")) {
-            if(CategoryController.removeCategory(CategoryController.getCategories().get(checkCategory()))){
+        if (confirmation.equalsIgnoreCase("yes") || confirmation.equalsIgnoreCase("y")) {
+            if (CategoryController.removeCategory(CategoryController.getCategories().get(categoryIndex))) {
                 System.out.println("Category deleted successfully.");
             } else {
                 System.out.println("Failed to delete category. Please try again.");
-            }    
+            }
+        } else {
+            System.out.println("Category deletion cancelled.");
         }
-        else {
-            System.out.println("Category deletion cancelled.");        
-        }
-        
     }
+
     public static Category getCategory(Scanner sc) {
-        
         if (CategoryController.isCategoryEmpty()) {
             return null;
         }
@@ -114,8 +135,7 @@ public class CategoryHelper implements Execute, Editable, Viewable {
         return CategoryController.getCategories().get(categoryIndex);
     }
 
-
-    private int checkCategory(){
+    private int checkCategory() {
         view();
         System.out.println("Enter the number of the category you want :");
         int categoryIndex = sc.nextInt() - 1;
@@ -127,8 +147,7 @@ public class CategoryHelper implements Execute, Editable, Viewable {
         return categoryIndex;
     }
 
-    private Object[] getDetails(){
-
+    private Object[] getDetails() {
         System.out.println("Enter the Category Name");
         String categoryName = sc.nextLine();
         System.out.println("Enter the Category Description");

@@ -46,6 +46,9 @@ public class CategoryController {
     public static boolean removeCategory(Category obj) {
         if (obj != null) {
             category.remove(obj);
+            if(obj.getProduct() == null || obj.getProduct().isEmpty()) {
+                return true;
+            }
             return ProductController.removeProductByCategory(obj.getProduct());
         }
         return false;

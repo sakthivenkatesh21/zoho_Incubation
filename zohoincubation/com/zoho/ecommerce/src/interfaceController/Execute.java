@@ -1,4 +1,4 @@
-package zohoincubation.com.zoho.ecommerce.src.view;
+package zohoincubation.com.zoho.ecommerce.src.interfaceController;
 
 import java.util.Scanner;
 

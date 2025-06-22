@@ -3,14 +3,14 @@ package zohoincubation.com.zoho.ecommerce.src.view;
 import java.util.Scanner;
 
 import zohoincubation.com.zoho.ecommerce.src.controller.OrderController;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Viewable;
 // import zohoincubation.com.zoho.ecommerce.src.controller.PaymentController;
 import zohoincubation.com.zoho.ecommerce.src.model.Card;
 import zohoincubation.com.zoho.ecommerce.src.model.Client;
 import zohoincubation.com.zoho.ecommerce.src.model.Order;
 import zohoincubation.com.zoho.ecommerce.src.model.Seller;
 import zohoincubation.com.zoho.ecommerce.src.model.User;
-
-import zohoincubation.com.zoho.ecommerce.src.paymentCreditionals.PaymentHelper;
 
 public class OrderHelper implements Execute, Viewable {
   private Scanner sc;
@@ -29,7 +29,7 @@ public class OrderHelper implements Execute, Viewable {
   @Override
   public void operation(Scanner sc, User loggedInUser) {
     while (true) {
-      if (loggedInUser.getId() == 2)
+      if (loggedInUser.getRole() == 2)
         System.out.println("1. View Orders\n0. Exit");
       else
         System.out.println("1. Checkout\n2. View Order\n0. Exit");
@@ -38,13 +38,13 @@ public class OrderHelper implements Execute, Viewable {
       sc.nextLine();
       switch (choice) {
         case 1:
-          if (loggedInUser.getId() == 2)
+          if (loggedInUser.getRole() == 2)
             view();
           else
             checkout();
           break;
         case 2:
-          view();
+           if (loggedInUser.getRole() == 1) view();
           break;
         case 0:
           System.out.println("Exiting Order Management.");
@@ -55,7 +55,7 @@ public class OrderHelper implements Execute, Viewable {
     }
   }
 
-  public void checkout() {
+  private void checkout() {
     if (((Client) loggedInUser).getcard() == null || ((Client) loggedInUser).getcard().getProduct() == null || ((Client) loggedInUser).getcard().getProduct().isEmpty()) {
       System.out.println("You must have a valid card to check out. Please add Product to a card And checkout your account.");
       return;
@@ -64,16 +64,15 @@ public class OrderHelper implements Execute, Viewable {
     if (loggedInUser instanceof Client) {
       Card card = ((Client) loggedInUser).getcard();
       WishlistHandler wishlistHandler = new WishlistHandler(sc, loggedInUser);
-      // showcardProduct(card);
       wishlistHandler.view();
       System.out.println("Enter 'Yes | Y ' to confirm checkout\n\t OR\n'No | N' Remove Product From Card:");
       String choice = sc.nextLine().trim().toUpperCase();
 
       if (choice.equals("NO") || choice.equals("N")) {
-        // removeProductFromCard(sc, card);
         wishlistHandler.delete();
       } else if (choice.equals("YES") || choice.equals("Y")) {
         System.out.println("Proceeding to checkout...");
+        wishlistHandler.checkQuantityExist(card.getProduct());
         double cardTotal = card.calculateCardTotal();
         String payment = PaymentHelper.paymentProcess(sc, cardTotal);
         if (payment == null) {
@@ -96,9 +95,9 @@ public class OrderHelper implements Execute, Viewable {
   }
 
   public void view() {
-    if (loggedInUser.getId() == 1) {
+    if (loggedInUser.getRole() == 1) {
       dispalyClientOrders(sc, loggedInUser);
-    } else if (loggedInUser.getId() == 2) {
+    } else if (loggedInUser.getRole() == 2) {
       displaySellerOrders(sc, loggedInUser);
     } else {
       System.out.println("You are not authorized to view orders.");

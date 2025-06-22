@@ -1,10 +1,13 @@
+
+
+
 package zohoincubation.com.zoho.ecommerce.src.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import zohoincubation.com.zoho.ecommerce.src.view.Execute;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.ProductHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.WishlistHandler;
@@ -13,17 +16,15 @@ public class Client extends User {
     
     private Card card;
     private String address;
-    private String paymentDetails;
     private List<Order> previousOrderProduct;
     
     
     public Client() {}
 
-    public Client(int id, String name,String phone, String email, String password, String gender, String address, String paymentDetails) {
+    public Client(int id, String name,String phone, String email, String password, String gender, String address) {
         super(id, name, phone, email, password, gender);
         this.card = new Card();
         this.address = address;
-        this.paymentDetails = paymentDetails;
         previousOrderProduct = new ArrayList<>();
         
     }
@@ -37,7 +38,7 @@ public class Client extends User {
         };
     }
 
-    protected Execute[] getOperations(Scanner sc, User loggedInUser) {
+    public Execute[] getOperations(Scanner sc, User loggedInUser) {
         if (operations == null) {
             list(sc, loggedInUser);
         }
@@ -58,14 +59,6 @@ public class Client extends User {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getPaymentDetails() {
-        return paymentDetails;
-    }
-
-    public void setPaymentDetails(String paymentDetails) {
-        this.paymentDetails = paymentDetails;
     }
 
     public List<Order> getPreviousOrderProduct() {

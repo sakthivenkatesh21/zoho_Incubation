@@ -1,8 +1,13 @@
 package zohoincubation.com.zoho.ecommerce.src.view;
 
+import java.lang.reflect.Executable;
+import java.util.List;
 import java.util.Scanner;
 
 import zohoincubation.com.zoho.ecommerce.src.controller.ProductController;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Editable;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
+import zohoincubation.com.zoho.ecommerce.src.interfaceController.Viewable;
 import zohoincubation.com.zoho.ecommerce.src.model.Category;
 import zohoincubation.com.zoho.ecommerce.src.model.Product;
 import zohoincubation.com.zoho.ecommerce.src.model.Seller;
@@ -27,8 +32,7 @@ public class ProductHelper implements Execute,Editable,Viewable {
     @Override
     public void operation(Scanner sc, User loggedInUser) {
         while (true) {
-            System.out.println("Welcome to Product Management");
-            if (loggedInUser.getId() == 1) {
+            if (loggedInUser.getRole() == 1) {
                 System.out.println("1.View Products\n0.Back(Exit)");
             } else {
                 System.out.println("1.Add Product\n2.View Product\n3.Update Product\n4.RemoveProduct\n0.Back(Exit)");
@@ -39,7 +43,7 @@ public class ProductHelper implements Execute,Editable,Viewable {
 
             switch (choice) {
                 case 1:
-                    if (loggedInUser.getId() == 1) {
+                    if (loggedInUser.getRole() == 1) {
                         view();
                     } else {
                         add();
@@ -70,14 +74,14 @@ public class ProductHelper implements Execute,Editable,Viewable {
         }
         category = CategoryHelper.getCategory(sc);
         if (category == null) {
-            System.out.println("No category selected. Please select a category first.");
+            System.out.println("No category Available. Please Add a category first.");
             return;
         }
         Object[] data = getDetails();
         Product product = ProductController.createProduct(
             data[0].toString(),
             data[1].toString(),
-            Integer.parseInt(data[2].toString()),
+            Double.parseDouble(data[2].toString()),
             Integer.parseInt(data[3].toString()),
             category,
             loggedInUser
@@ -95,7 +99,7 @@ public class ProductHelper implements Execute,Editable,Viewable {
             System.out.println("No product is Available ");
             return;
         }
-        if (loggedInUser.getId() == 2) {
+        if (loggedInUser.getRole() == 2) {
             showCategoryProducts(category);
             return;
         }
@@ -113,7 +117,7 @@ public class ProductHelper implements Execute,Editable,Viewable {
                     search();
                     break;
                 case 3:
-                    if (loggedInUser.getId() == 1) {
+                    if (loggedInUser.getRole() == 1) {
                         addWishList(category);
                     }
                     break;
@@ -132,15 +136,16 @@ public class ProductHelper implements Execute,Editable,Viewable {
         if (product == null) {
             return;
         } else {
+            System.out.println("Current Product Details: " + product);
             Object[] data = getDetails();
             if (ProductController.updateProduct(
                 product.getId(),
                 data[0].toString(),
                 data[1].toString(),
-                Integer.parseInt(data[2].toString()),
+                Double.parseDouble(data[2].toString()),
                 Integer.parseInt(data[3].toString())
             )) {
-                System.out.println("Product updated successfully: " + product.getProductName());
+                System.out.println("Product updated successfully: " + product);
             } else {
                 System.out.println("Product not found or could not be updated.");
             }
@@ -174,7 +179,7 @@ public class ProductHelper implements Execute,Editable,Viewable {
     }
 
     private Product checkProduct() {
-        if (loggedInUser.getId() == 1) {
+        if (loggedInUser.getRole() == 1) {
             System.out.println("You are not authorized to update a product. Only sellers can update products.");
             return null;
         }
@@ -204,19 +209,23 @@ public class ProductHelper implements Execute,Editable,Viewable {
     private void search() {
         System.out.println("Enter a Product Name to search");
         String productName = sc.nextLine();
-        Product product = ProductController.isProductExists(productName);
+        List<Product> product = ProductController.isProductExists(productName);
         if (product == null) {
             System.out.println("Product not found. Please try again.");
             return;
         }
-        System.out.println("Product found in Category: " + product.getCategory().getName());
-        System.out.println("Product Details:\t \n " + product);
+        for (Product obj : product) {
+            System.out.println("Product found in Category: " + obj.getCategory().getName());
+            System.out.println("Product Details: \n \t " + obj);
+        }
         System.out.println("1.Add to Wish List\n2.Search Product Again\n3.Back(Exit)");
         int choice = sc.nextInt();
         sc.nextLine();
         if (choice == 1) {
-            WishlistHandler addCard = new WishlistHandler(product);
-            addCard.add();
+           if(!addingProductToCart()){
+                System.out.println("Exiting to previous menu.");
+                return;
+           }
         } else if (choice == 2) {
             search();
         } else {
@@ -226,38 +235,58 @@ public class ProductHelper implements Execute,Editable,Viewable {
     }
 
     private void addWishList(Category category) {
-        if (loggedInUser.getId() != 2) {
+        if (loggedInUser.getRole() == 2) {
             System.out.println("You are not authorized to add products to the cart. Only buyers can add products to the cart.");
             return;
         }
         while (true) {
             showCategoryProducts(category);
+            if(!addingProductToCart()){
+                System.out.println("Exiting to previous menu.");
+                return;
+            }     
+        }
+    }
+    private boolean addingProductToCart() {
             System.out.println("Enter the Product ID to add to cart or 0 to exit");
             int productId = sc.nextInt();
             sc.nextLine();
+            if(productId == 0) return false;
             Product product = ProductController.isProductExist(productId);
-            if (product != null && category.getProduct().contains(product)) {
-                WishlistHandler addCard = new WishlistHandler(product);
-                addCard.operation(sc, loggedInUser);
-            } else {
-                System.out.println("Product not found in the selected category.\n\tPlease try again");
+            if (product == null && !category.getProduct().contains(product)) {
+                System.out.println("Product not found in the selected category.");
+                return false;
             }
-        }
+            WishlistHandler addCard = new WishlistHandler(product,sc,loggedInUser);
+            addCard.add();
+                // Execute [] obj = loggedInUser.getOperations(sc, loggedInUser);
+                // for(Execute operation : obj) {
+                //     if (operation instanceof WishlistHandler) {
+                //         WishlistHandler addCard = (WishlistHandler) operation;
+                //         addCard.add();
+                //         break;
+                //     }
+                // }
+             return true;            
     }
 
     private void showCategoryProducts(Category category) {
         System.out.println("Products in Category: " + category.getName() + "\n");
 
-        if (loggedInUser.getId() == 2) {
+        if (loggedInUser.getRole() == 2) {
+            List<Product> product =ProductController.getSellerProducts(category, loggedInUser);
+            if(product.isEmpty()) {
+                System.out.println("No products found for the logged-in seller in this category.");
+                return;
+            }
             System.out.println("Seller ID: " + ((Seller) loggedInUser).getId() + "Seller Name: " + ((Seller) loggedInUser).getName());
             System.out.println();
             System.out.println("Seller Products: ");
-            for (Product product : category.getProduct()) {
-                if (product.getSeller().getId() == ((Seller) loggedInUser).getId()) {
-                    System.out.println(product);
-                }
+            for (Product obj :product) {
+                    System.out.println(obj);
             }
-        } else {
+            
+        } else if (loggedInUser.getRole() == 1){
             for (Product product : category.getProduct()) {
                 System.out.println(product);
             }

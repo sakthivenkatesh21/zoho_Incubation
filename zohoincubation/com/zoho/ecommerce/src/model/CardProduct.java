@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class CardProduct extends Product {
 
     private int quantity;
-    private LocalDateTime prodTimeAdded;
+    private LocalDateTime prodTimeDateAdded;
     private OrderStatus producStatus;
 
     public CardProduct() {}
@@ -15,13 +15,13 @@ public class CardProduct extends Product {
         super(id, product.getProductName(), product.getDescription(), product.getPrice(), 
               product.getStock(), product.getCategory(), product.getSeller());
         this.quantity = quantity;
-        this.prodTimeAdded = LocalDateTime.now();
+        this.prodTimeDateAdded = LocalDateTime.now();
         this.producStatus = OrderStatus.PENDING;
     }
 
-    public CardProduct(int quantity, LocalDateTime prodTimeAdded, OrderStatus producStatus) {
+    public CardProduct(int quantity, LocalDateTime prodTimeDateAdded, OrderStatus producStatus) {
         this.quantity = quantity;
-        this.prodTimeAdded = prodTimeAdded;
+        this.prodTimeDateAdded = prodTimeDateAdded;
         this.producStatus = producStatus;
     }
 
@@ -33,20 +33,20 @@ public class CardProduct extends Product {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getProdTimeAdded() {
-        return prodTimeAdded;
+    public LocalDateTime getprodTimeDateAdded() {
+        return prodTimeDateAdded;
     }
 
-    public void setProdTimeAdded(LocalDateTime prodTimeAdded) {
-        this.prodTimeAdded = prodTimeAdded;
+    public void setprodTimeDateAdded(LocalDateTime prodTimeDateAdded) {
+        this.prodTimeDateAdded = prodTimeDateAdded;
     }
 
     public String getFormattedDate() {
-        return DateTimeFormatter.ofPattern("dd-MM-yyyy").format(prodTimeAdded);
+        return DateTimeFormatter.ofPattern("dd-MM-yyyy").format(prodTimeDateAdded);
     }
 
     public String getFormattedTime() {
-        return DateTimeFormatter.ofPattern("hh:mm").format(prodTimeAdded);
+        return DateTimeFormatter.ofPattern("hh:mm").format(prodTimeDateAdded);
     }
 
     public OrderStatus getProducStatus() {
@@ -61,7 +61,11 @@ public class CardProduct extends Product {
         return getStock() >= getQuantity();
     }
 
-    public void reStock() {
-        setStock(getQuantity() + getStock());
+    public boolean reStock() {
+        if(canAddToCard()){
+            setStock( getStock()-getQuantity());
+            return true;
+        }
+        return false;
     }
 }

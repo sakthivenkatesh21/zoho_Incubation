@@ -16,7 +16,7 @@ public class PaymentController {
             case "Paytm":
                 return process(new Paytm(amount, paymentMethod, credentials));
             default:
-                System.out.println("Invalid Payment Processing");
+                // System.out.println("Invalid Payment Processing");
                 return null;
         }
     }
@@ -35,7 +35,7 @@ public class PaymentController {
             case "NetBanking":
                 return process(new MayPay(amount, viaMode, credentials));
             default:
-                System.out.println("Invalid Payment Processing Mode");
+                // System.out.println("Invalid Payment Processing Mode");
                 return null;
         }
     }
