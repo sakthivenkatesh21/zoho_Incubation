@@ -154,10 +154,8 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
 
     private Object[] getDetails() {
         ValidData validData = new ValidData(sc);
-        System.out.println("📝 Enter the Category Name:");
-        String categoryName = validData.name();
-        System.out.println("📝 Enter the Category Description:");
-        String categoryDescription = validData.name();
+        String categoryName = validData.name("📝 Enter the Category Name:");
+        String categoryDescription = validData.address("📝 Enter the Category Description:");
         return new Object[]{categoryName, categoryDescription};
     }
 }

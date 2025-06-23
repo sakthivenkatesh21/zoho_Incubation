@@ -86,13 +86,17 @@ public class Product {
 
     @Override
     public String toString() {
-        System.out.println("Product ID: " + getId());
-        System.out.println("Product Name: " + getProductName());
-        System.out.println("Product Price: " + getPrice());
-        System.out.println("Product Quantity: " + getStock());
-        System.out.println("Product Description: " + getDescription());
-        System.out.println("Seller Name: " + getSeller().getName());
-        System.out.println("-----------------------------");
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("========================================\n")
+          .append("           Product Details              \n")
+          .append("========================================\n")
+          .append(String.format("ID          : %d\n", getId()))
+          .append(String.format("Name        : %s\n", getProductName()))
+          .append(String.format("Price       : $%.2f\n", getPrice()))
+          .append(String.format("Quantity    : %d\n", getStock()))
+          .append(String.format("Description : %s\n", getDescription()))
+          .append(String.format("Seller      : %s\n", getSeller() != null ? getSeller().getName() : "N/A"))
+          .append("========================================\n");
+        return sb.toString();
     }
 }

@@ -15,7 +15,7 @@ public class MayPay implements IPaymentGateway {
     }
 
     @Override
-    public void processPayment() {
+    public String processPayment() {
         try {
             if (amount <= 0) {
                 throw new IllegalArgumentException("MayPay: Invalid amount.");
@@ -42,6 +42,7 @@ public class MayPay implements IPaymentGateway {
             }
             System.out.println("✅ " + paymentMethod + " payment processed successfully.");
             Thread.sleep(1500);
+            // return confirmPayment(generateTransactionId());
         } catch (IllegalArgumentException | InterruptedException e) {
             if (e instanceof InterruptedException) {
                 System.out.println(paymentMethod + " payment interrupted.");
@@ -49,6 +50,8 @@ public class MayPay implements IPaymentGateway {
                 System.out.println(paymentMethod + " error: " + e.getMessage());
             }
         }
+        // String transactionId = ();
+        return confirmPayment(generateTransactionId());
     }
 
     @Override
@@ -63,6 +66,6 @@ public class MayPay implements IPaymentGateway {
             return null;
         }
 
-        return "✅ " + paymentMethod + " confirmed. Transaction ID: " + transactionId;
+        return "✅ " + paymentMethod + " confirmed.\nTransaction ID: " + transactionId;
     }
 }

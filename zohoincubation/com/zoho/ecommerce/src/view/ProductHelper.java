@@ -191,13 +191,11 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
 
     private Object[] getDetails() {
         ValidData validator = new ValidData(sc);
-        System.out.println("📝 Enter the new Product Name:");
-        String productName = validator.name();
-        System.out.println("📝 Enter the new Product Description:");
-        String productDescription =validator.name();
+        String productName = validator.name("📝 Enter a New Product Name:");
+        String productDescription = validator.address("📝 Enter a New Product Description:");
         System.out.println("💰 Enter the new Product Price:");
         double productPrice = sc.nextDouble() ;
-        while(productPrice> 0 ){
+        while(productPrice< 0 ){
             System.out.println("❌ Invalid price! Please enter a valid price greater than 0.");
             productPrice = sc.nextDouble();
         }
@@ -261,15 +259,22 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
         System.out.println("3. 🔙 Back (Exit)");
         System.out.println("****************************************");
         System.out.print("Enter your choice: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
-        switch (choice) {
+        try {
+            int choice = sc.nextInt();
+            sc.nextLine();
+            switch (choice) {
             case 1 -> {
                 if (!addingProductToCart())
-                    System.out.println("🔙 Exiting to previous menu.");
+                System.out.println("🔙 Exiting to previous menu.");
             }
             case 2 -> search();
             default -> System.out.println("🔙 Exiting to previous menu.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("❌ Invalid input. Please enter a number.");
+            sc.nextLine();
+        } catch (Exception e) {
+            System.out.println("❌ An unexpected error occurred: " + e.getMessage());
         }
     }
 

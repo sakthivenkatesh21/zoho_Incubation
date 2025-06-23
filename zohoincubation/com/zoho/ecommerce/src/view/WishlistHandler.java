@@ -143,6 +143,7 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
 
     @Override
     public void delete() {
+        card = ((Client) loggedInUser).getcard();
         if (card.getProduct().isEmpty()) {
             System.out.println("📭 Your Wish List is empty. Please add products to the Wish List first.");
             return;
@@ -174,12 +175,12 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
 
     private CardProduct checkCardProduct() {
         view();
-        System.out.println("🔢 Enter the ID to remove from the cart \n Or Enter '-1' to Exit: ");
+        System.out.println("🔢 Enter the Product  ID  from the cart \n Or Enter '-1' to Exit: ");
         int indexId = sc.nextInt();
         if (indexId == -1) {
             System.out.println("🚪 You have chosen to proceed with Exit.");
             return null;
-        } else if (indexId >= card.getProduct().size() || indexId <= 0) {
+        } else if (indexId > card.getProduct().size() || indexId <= 0) {
             System.out.println("❌ Invalid Card ID.");
             return null;
         }

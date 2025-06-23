@@ -2,7 +2,6 @@ package zohoincubation.com.zoho.ecommerce.src.view;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import javax.xml.validation.Validator;
 import zohoincubation.com.zoho.ecommerce.src.controller.UserController;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Editable;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
@@ -85,19 +84,26 @@ public class UserHelper implements Execute, Editable, Viewable {
     public void update() {
         ValidData check = new ValidData(sc);
         while (true) {
-            System.out.println("✏️ Updating User Information...");
-            System.out.println("1️⃣ Update Name");
-            System.out.println("2.📱 Update Phone Number");
-            System.out.println("3. Update Email");
-            System.out.println("4. Update Password");
-            System.out.println("5. Update Gender");
+            System.out.println("""
+                    ╔═══════════════════════════════════════════════════╗
+                   ||           ✏️ UPDATE USER INFORMATION MENU         ||
+                    ╚═══════════════════════════════════════════════════╝
+                    1️⃣  🧑  Update Name
+                    2️⃣  📱  Update Phone Number
+                    3️⃣  📧  Update Email
+                    4️⃣  🔒  Update Password
+                    5️⃣  🚻  Update Gender""");
             if (loggedInUser.getRole() == 1) {
-                System.out.println("6. Update Address (Client)");
+                System.out.println("6️⃣  🏠  Update Address (Client)");
             } else if (loggedInUser.getRole() == 2) {
-                System.out.println("6. Update Company Info (Seller)");
-                System.out.println("7. Update Company Address (Seller)");
+                System.out.println("""
+                        6️⃣  🏢  Update Company Name (Seller)
+                        7️⃣  📍  Update Company Address (Seller)""");
             }
-            System.out.println("0️⃣ Exit Update Menu");
+            System.out.println("""
+                    0️⃣  ❌  Exit Update Menu
+                    ════════════════════════════════════════════════════
+                    """);
             System.out.print("👉 Enter your choice: ");
 
             try {
@@ -105,21 +111,39 @@ public class UserHelper implements Execute, Editable, Viewable {
                 sc.nextLine();
 
                 switch (choice) {
-                    case 1 -> loggedInUser.setName(check.name());
-                    case 2 -> loggedInUser.setPhone(isPhoneExists(check.phone())) ;   
-                    case 3 -> loggedInUser.setEmail(isEmailExists(check.email()));                       
-                    case 4 -> loggedInUser.setPassword(check.password());
-                    case 5 -> loggedInUser.setGender(check.gender());
+                    case 1 -> {
+                        loggedInUser.setName(check.name("🧑 Enter new Name: "));
+                        System.out.println("✅ Name updated successfully." + loggedInUser.getName());
+                    }
+                    case 2 -> {
+                        loggedInUser.setPhone(isPhoneExists(check.phone("📱 Enter new phone number: "), check));
+                        System.out.println("✅ Phone number updated successfully." + loggedInUser.getPhone());
+                    }
+                    case 3 -> {
+                        loggedInUser.setEmail(isEmailExists(check.email("📧 Enter new email: "), check));
+                        System.out.println("✅ Email updated successfully." + loggedInUser.getEmail());
+                    }
+                    case 4 -> {
+                        loggedInUser.setPassword(check.password("🔒 Enter new password: "));
+                        System.out.println("✅ Password updated successfully.");
+                    }
+                    case 5 -> {
+                        loggedInUser.setGender(check.gender("🚻 Enter new gender: "));
+                        System.out.println("✅ Gender updated successfully." + loggedInUser.getGender());
+                    }
                     case 6 -> {
                         if (loggedInUser.getRole() == 1) {
-                            ((Client) loggedInUser).setAddress(check.address());
+                            ((Client) loggedInUser).setAddress(check.address("🏠 Enter new address: "));
+                            System.out.println("✅ Address updated successfully." + ((Client) loggedInUser).getAddress());
                         } else if (loggedInUser.getRole() == 2) {
-                            ((Seller) loggedInUser).setCompany(check.name());
+                            ((Seller) loggedInUser).setCompany(check.name("🏢 Enter new company name: "));
+                            System.out.println("✅ Company name updated successfully." + ((Seller) loggedInUser).getCompany());
                         }
                     }
                     case 7 -> {
                         if (loggedInUser.getRole() == 2) {
-                            ((Seller) loggedInUser).setCompanyAddress(check.address());
+                            ((Seller) loggedInUser).setCompanyAddress(check.address("📍 Enter new company address: "));
+                            System.out.println("✅ Company address updated successfully." + ((Seller) loggedInUser).getCompanyAddress());
                         } else {
                             System.out.println("❌ Invalid choice for Client, no updates made.");
                         }
@@ -130,26 +154,23 @@ public class UserHelper implements Execute, Editable, Viewable {
                     }
                     default -> System.out.println("❌ Invalid choice, no updates made.");
                 }
+
             } catch (InputMismatchException e) {
                 System.out.println("❌ Invalid input. Please enter a valid number.");
                 sc.nextLine();
             } catch (Exception e) {
                 System.out.println("❌ An unexpected error occurred: " + e.getMessage());
             }
-            System.out.println("✅ User information updated successfully.");
-            System.out.println("📋 Updated User Information: \t " + loggedInUser);
         }
     }
 
     public static String[] getDetails(Scanner sc) {
         ValidData check = new ValidData(sc);
-        String name = check.name();     
-        String phone = isPhoneExists(check.phone());
-        
-        String email = isEmailExists(check.email());
-        
-        String password = check.password();
-        String gender = check.gender();
+        String name = check.name("🧑 Enter your Name :");
+        String phone = isPhoneExists(check.phone("📱 Enter a valid phone number: "), check);
+        String email = isEmailExists(check.email("📧 Enter a valid email address: "), check);
+        String password = check.password("🔒 Type your Password:");
+        String gender = check.gender("🚻 Enter your Gender:");
 
         System.out.println("👥 Are you Signing Up as Client or Seller?\n 1️⃣ Client\n 2️⃣ Seller (Enter @ Number)");
         int userType = sc.nextInt();
@@ -157,15 +178,13 @@ public class UserHelper implements Execute, Editable, Viewable {
 
         switch (userType) {
             case 1 -> {
-                String address = check.address();
-                return new String[]{name,phone, email, password, gender, address};
+                String address = check.address("🏠 Enter Address:");
+                return new String[]{name, phone, email, password, gender, address};
             }
             case 2 -> {
-                System.out.println("🏢 Enter a Company Name :");
-                String company = check.name();
-                System.out.println("📍 Enter a Company Address :");
-                String companyAddress = check.address();
-                return new String[]{name, phone,email, password, gender, company, companyAddress};
+                String company = check.name("🏢 Enter a Company Name :");
+                String companyAddress = check.address("📍 Enter a Company Address :");
+                return new String[]{name, phone, email, password, gender, company, companyAddress};
             }
             default -> {
                 System.out.println("❌ Invalid User Type");
@@ -173,17 +192,19 @@ public class UserHelper implements Execute, Editable, Viewable {
             }
         }
     }
-    private String isEmailExists(String email,Validator check) {
-        while(UserController.isMailExists(email)){
+
+    private static String isEmailExists(String email, ValidData check) {
+        while (UserController.isMailExists(email)) {
             System.out.println("❌ Email already exists. Please try again with a different email.");
-            email = check.email();
+            email = check.email("📧 Enter a valid email address: ");
         }
         return email;
     }
-    private String isPhoneExists(String phone,Validator check) {
-        while(UserController.isPhoneExists(phone)){
+
+    private static String isPhoneExists(String phone, ValidData check) {
+        while (UserController.isPhoneExists(phone)) {
             System.out.println("❌ Phone number already exists. Please try again with a different number.");
-            phone = check.phone();
+            phone = check.phone("📱 Enter a valid phone number: ");
         }
         return phone;
     }
