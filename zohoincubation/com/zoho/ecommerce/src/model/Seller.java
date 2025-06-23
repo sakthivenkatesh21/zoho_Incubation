@@ -3,7 +3,6 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.view.CategoryHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
@@ -17,6 +16,7 @@ public class Seller extends User {
     private String companyAddress;
     private List<Product> sellerProduct;
     private List<CardProduct> saledList; 
+    private final int seller = 2;
     
     public Seller(){}
 
@@ -95,7 +95,7 @@ public class Seller extends User {
     }
 
     public int getRole(){
-        return 2;
+        return seller;
     }
     
     public String toString() {

@@ -1,11 +1,9 @@
 package zohoincubation.com.zoho.ecommerce.src.view;
 
 import java.util.Scanner;
-
 import zohoincubation.com.zoho.ecommerce.src.controller.OrderController;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Viewable;
-// import zohoincubation.com.zoho.ecommerce.src.controller.PaymentController;
 import zohoincubation.com.zoho.ecommerce.src.model.Card;
 import zohoincubation.com.zoho.ecommerce.src.model.Client;
 import zohoincubation.com.zoho.ecommerce.src.model.Order;
@@ -70,7 +68,8 @@ public class OrderHelper implements Execute, Viewable {
 
       if (choice.equals("NO") || choice.equals("N")) {
         wishlistHandler.delete();
-      } else if (choice.equals("YES") || choice.equals("Y")) {
+      }
+      else if (choice.equals("YES") || choice.equals("Y")) {
         System.out.println("Proceeding to checkout...");
         wishlistHandler.checkQuantityExist(card.getProduct());
         double cardTotal = card.calculateCardTotal();
@@ -80,17 +79,12 @@ public class OrderHelper implements Execute, Viewable {
           return;
         }
         Order order = OrderController.createOrder(card, cardTotal, payment, loggedInUser);
-        if (order != null) {
+        if (order != null) 
           OrderStatusUpdate.flow(order);
-          return;
-        } else {
-          System.out.println("Order creation failed. Please try again.");
-          return;
-        }
-      } else {
-        System.out.println("Invalid choice. Please enter 'Yes' or 'No'.");
-        return;
-      }
+        else  
+          System.out.println("Order creation failed. Please try again.");     
+      }else 
+        System.out.println("Invalid choice. Please enter 'Yes' or 'No'.");  
     }
   }
 

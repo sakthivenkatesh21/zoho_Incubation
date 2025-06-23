@@ -1,7 +1,6 @@
 package zohoincubation.com.zoho.ecommerce.src.controller;
 
 import java.util.List;
-
 import zohoincubation.com.zoho.ecommerce.src.model.Card;
 import zohoincubation.com.zoho.ecommerce.src.model.CardProduct;
 import zohoincubation.com.zoho.ecommerce.src.model.Client;
@@ -23,6 +22,8 @@ public class OrderController {
                                     OrderStatus.CONFIRMED,amount,payment,card.getProduct());
         updateSellerSales(card.getProduct());
         card.getProduct().clear();
+        orders.add(order);
+        ((Client)loggedInUser).setPreviousOrderProduct(orders);
         return order;
         
     }

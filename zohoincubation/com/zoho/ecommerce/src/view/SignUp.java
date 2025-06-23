@@ -1,13 +1,13 @@
 package zohoincubation.com.zoho.ecommerce.src.view;
 
 import java.util.Scanner;
-
 import zohoincubation.com.zoho.ecommerce.src.controller.UserController;
+import zohoincubation.com.zoho.ecommerce.src.model.User;
 
-public class SignUp {
+public class SignUp    {
 
-    public void createUser(Scanner sc, Navigation navigation) {
-
+    public void createUser(Scanner sc) {
+        User obj;
         System.out.println("Enter a Name ");
         String name = sc.nextLine();
         System.out.println("Enter a Mobile Number");
@@ -23,19 +23,26 @@ public class SignUp {
         int userType = sc.nextInt();
         sc.nextLine();
 
-        if (userType == 1) {
+        if(userType == 1) {
             System.out.println("Enter an Address");
             String address = sc.nextLine();
-            UserController.createUser(name, phone, email, password, gender, address);
+            obj = UserController.createUser(name, phone, email, password, gender, address);
         } else if (userType == 2) {
             System.out.println("Enter a Company Name (If you are a Seller)");
             String company = sc.nextLine();
             System.out.println("Enter a Company Address (If you are a Seller)");
             String companyAddress = sc.nextLine();
-            UserController.createUser(name, phone, email, password, gender,company, companyAddress);
+            obj = UserController.createUser(name, phone, email, password, gender,company, companyAddress);
+
         } else {
-            System.out.println("Invalid User");
-            return;
+            System.out.println("Invalid User");  
+            return;       
         }
+        if(obj != null) obj.showMenu(sc, obj);
+        else {
+            System.out.println("User creation failed. Please try again.");
+        }
+
     }
 }
+

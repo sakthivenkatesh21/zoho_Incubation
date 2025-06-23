@@ -2,7 +2,7 @@ package zohoincubation.com.zoho.ecommerce.src.view;
 
 import java.util.List;
 import java.util.Scanner;
-
+import zohoincubation.com.zoho.ecommerce.src.controller.ProductController;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Editable;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Viewable;
@@ -62,6 +62,7 @@ public class WishlistHandler implements Execute, Editable, Viewable {
     }
 
     public void add() {
+
         if (loggedInUser.getRole() == 2) {
             System.out.println("You are not authorized to add products to the cart. Only buyers can add products to the cart.");
             return;
@@ -70,6 +71,10 @@ public class WishlistHandler implements Execute, Editable, Viewable {
         System.out.println("Enter a Quantity for the product ");
         int quantity = sc.nextInt();
         sc.nextLine();
+        if(ProductController.isProductExistCard(card.getProduct(),product.getId())) {
+            System.out.println("Product already exists in the cart. Please update the quantity instead.");
+            return;
+        }
         CardProduct cardProduct = new CardProduct(card.getProduct().size() + 1, product, quantity);
         if (cardProduct.canAddToCard() && quantity<=10 && quantity >0) {
             card.getProduct().add(cardProduct);
@@ -89,7 +94,7 @@ public class WishlistHandler implements Execute, Editable, Viewable {
                 return;
             }
             for(int i=0; i<card.getProduct().size(); i++){ 
-                System.out.println("Product " + (i+1) + ":"+ card.getProduct().get(i).getProductName()+" Price: " + card.getProduct().get(i).getPrice());
+                System.out.println("Product " + (i+1) + ":"+ card.getProduct().get(i).getProductName()+" Price: " + (card.getProduct().get(i).getQuantity()*card.getProduct().get(i).getPrice()));
                 System.out.println("\t Quantity: " + card.getProduct().get(i).getQuantity()+"    OrderStatus: " + card.getProduct().get(i).getProducStatus());
                 System.out.println();
                           
@@ -112,7 +117,13 @@ public class WishlistHandler implements Execute, Editable, Viewable {
         int newQuantity = sc.nextInt();
         cardProduct.setQuantity(newQuantity);
         sc.nextLine();
-        if (cardProduct.canAddToCard() && newQuantity <=10 && newQuantity >0) {
+        if (cardProduct.canAddToCard() && newQuantity >0) {
+            if(newQuantity > 10) {
+                System.out.println("You cannot add more than 10 items to the cart.");
+                newQuantity = 10; 
+                cardProduct.setQuantity(newQuantity); 
+            }
+
             // cardProduct.setQuantity(newQuantity);
             // product.setStock(product.getStock() - newQuantity);
             // cardProduct.setQuantity(cardProduct.getQuantity() + oldQuantity);
@@ -141,7 +152,7 @@ public class WishlistHandler implements Execute, Editable, Viewable {
           }
     }
 
-    public void  checkQuantityExist(List<CardProduct> cardProduct){
+   public void  checkQuantityExist(List<CardProduct> cardProduct){
         for(CardProduct obj : cardProduct){
             if(!obj.reStock()){
                 System.out.println(obj.getProductName()+" Quantity Available :"+obj.getStock()+" Your Choosen Quantity is :"+obj.getQuantity());
@@ -162,15 +173,15 @@ public class WishlistHandler implements Execute, Editable, Viewable {
     private CardProduct  checkCardProduct(){
         view();
         System.out.println("Enter the  ID to remove from the cart \n Or Enter '-1' to Exit ");
-        int indexId = sc.nextInt() - 1;
+        int indexId = sc.nextInt() ;
         if(indexId == -1){
              System.out.println("You have chosen to proceed with Exit.");
             return  null;
         }
-        else if( indexId >=card.getProduct().size() || indexId<0) {
+        else if( indexId >=card.getProduct().size() || indexId<=0) {
             System.out.println("Invalid Card ID.");
             return  null;
          }
-         return card.getProduct().get(indexId); 
+         return card.getProduct().get(indexId-1); 
     }
 }

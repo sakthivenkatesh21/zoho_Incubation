@@ -2,7 +2,7 @@ package zohoincubation.com.zoho.ecommerce.src.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import zohoincubation.com.zoho.ecommerce.src.model.CardProduct;
 import zohoincubation.com.zoho.ecommerce.src.model.Category;
 import zohoincubation.com.zoho.ecommerce.src.model.Product;
 import zohoincubation.com.zoho.ecommerce.src.model.Seller;
@@ -93,5 +93,13 @@ public class ProductController {
                 }
             }
         return products;
+    }
+    public static   boolean isProductExistCard(List<CardProduct> product , int id) {
+        for (CardProduct obj : product) {
+            if (obj.getId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

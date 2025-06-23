@@ -6,7 +6,6 @@ package zohoincubation.com.zoho.ecommerce.src.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.ProductHelper;
@@ -17,6 +16,7 @@ public class Client extends User {
     private Card card;
     private String address;
     private List<Order> previousOrderProduct;
+    private final int Customer = 1;
     
     
     public Client() {}
@@ -70,7 +70,7 @@ public class Client extends User {
     }
 
     public int getRole(){
-        return 1;
+        return Customer;
     }
     
     public String toString(){

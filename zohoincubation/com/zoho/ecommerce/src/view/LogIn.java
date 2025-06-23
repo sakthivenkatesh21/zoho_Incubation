@@ -1,15 +1,13 @@
 package zohoincubation.com.zoho.ecommerce.src.view;
 
 import java.util.Scanner;
-
 import zohoincubation.com.zoho.ecommerce.src.controller.SignIn;
-
 import zohoincubation.com.zoho.ecommerce.src.model.User;
 
 public class LogIn {
     private User logInUser;
 
-    public void logIn(Scanner sc, Navigation navigation) {
+    public void logIn(Scanner sc) {
 
         System.out.println("Enter a Email");
         String email = sc.nextLine();
@@ -35,6 +33,6 @@ public class LogIn {
             System.out.println("Please try again");
             return;
         }
-    } 
+    }
     
 }

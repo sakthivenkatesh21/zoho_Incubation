@@ -18,10 +18,10 @@ public class Navigation {
             sc.nextLine();
             switch (choice) {
                 case 1:
-                    new SignUp().createUser(sc, this);
+                    new SignUp().createUser(sc);
                     break;
                 case 2:
-                    new LogIn().logIn(sc, this);
+                    new LogIn().logIn(sc);
                     break;
                 case 3:
                     exit(sc);

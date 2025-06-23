@@ -11,14 +11,14 @@ class OrderStatusUpdate {
             📦 Client Name   : %s
             🆔 Order ID       : %s
             🔁 Transaction ID : %s
-            🚚 Order Status   : %s
+            🚚 Order Status   : %s    
             ======================================
             """.formatted(productName, orderId, transactionId, status));
     }
 
     public static void flow(Order order) {
         String[] statuses = new String[]{
-            OrderStatus.PENDING.getLabel(),
+            OrderStatus.CONFIRMED.getLabel(),
             OrderStatus.SHIPPED.getLabel(),
             OrderStatus.DELIVERED.getLabel()
         };
