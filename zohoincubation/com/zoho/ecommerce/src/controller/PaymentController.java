@@ -10,15 +10,14 @@ public class PaymentController {
     private static PaymentProcessing paymentProcessing;
 
     public static String pay(double amount, String paymentMethod, String credentials) {
-        switch (paymentMethod) {
-            case "GPay":
-                return process(new Gpay(amount, paymentMethod, credentials));
-            case "Paytm":
-                return process(new Paytm(amount, paymentMethod, credentials));
-            default:
-                // System.out.println("Invalid Payment Processing");
-                return null;
-        }
+        return switch (paymentMethod) {
+            case "GPay" -> 
+                 process(new Gpay(amount, paymentMethod, credentials));
+            case "Paytm" ->
+                 process(new Paytm(amount, paymentMethod, credentials));
+            default->
+                 null;
+        };
     }
 
     private static String process(IPaymentGateway paymentGateway) {
@@ -27,16 +26,13 @@ public class PaymentController {
     }
 
     public static String pay(double amount, String paymentMethod, String credentials, String viaMode) {
-        switch (viaMode) {
-            case "Card":
-                return process(new MayPay(amount, viaMode, credentials));
-            case "Upi":
-                return process(new MayPay(amount, viaMode, credentials));
-            case "NetBanking":
-                return process(new MayPay(amount, viaMode, credentials));
-            default:
-                // System.out.println("Invalid Payment Processing Mode");
-                return null;
-        }
+        return switch (viaMode) {
+            case "Upi" -> 
+                process(new MayPay(amount, viaMode, credentials));
+            case "NetBanking" -> 
+                process(new MayPay(amount, viaMode, credentials));
+            default -> 
+                null;
+        }; 
     }
 }

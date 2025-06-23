@@ -7,7 +7,7 @@ import zohoincubation.com.zoho.ecommerce.src.model.User;
 
 public class UserController {
     private static int idGenerator;
-    private static List<User> userList = DataManager.getDataManager().getUser();
+    private static final List<User> userList = DataManager.getDataManager().getUser();
 
     public static User createUser(String name, String phone, String email, String password, String gender, String address) {
         User user = new Client(++idGenerator, name, phone, email, password, gender, address);
@@ -19,5 +19,21 @@ public class UserController {
         User user = new Seller(++idGenerator, name, phone, email, password, gender, company, companyAddress);
         userList.add(user);
         return user;
+    }
+    public static boolean isMailExists(String email) {
+        for (User user : userList) {
+            if (user.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean isPhoneExists(String phone) {
+        for (User user : userList) {
+            if (user.getPhone().equals(phone)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

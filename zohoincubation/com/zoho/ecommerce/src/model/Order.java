@@ -114,18 +114,18 @@ public class Order {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("--------------------------------------------------\n");
-        sb.append("🧾 Order Summary\n");
-        sb.append("--------------------------------------------------\n");
-        sb.append(String.format("📦 Order ID      : %s\n", id));
-        sb.append(String.format("👤 Client        : %s\n", client.getName()));
-        sb.append(String.format("📍 Address       : %s\n", address));
-        sb.append(String.format("🕒 Order Time    : %s %s\n", getFormattedDate(), getFormattedTime()));
-        sb.append(String.format("📌 Status        : %s\n", status));
-        sb.append(String.format("💰 Total Amount  : $%.2f\n", total));
-        sb.append(String.format("💳 Payment Method: %s\n", payment));
-        sb.append(String.format("🛒 Products      : %s\n", print()));
-        sb.append("--------------------------------------------------\n");
+        sb.append("--------------------------------------------------\n")
+        .append("🧾 Order Summary\n")
+        .append("--------------------------------------------------\n")
+        .append(String.format("📦 Order ID      : %s\n", id))
+        .append(String.format("👤 Client        : %s\n", client.getName()))
+        .append(String.format("📍 Address       : %s\n", address))
+        .append(String.format("🕒 Order Time    : %s %s\n", getFormattedDate(), getFormattedTime()))
+        .append(String.format("📌 Status        : %s\n", status))
+        .append(String.format("💰 Total Amount  : $%.2f\n", total))
+        .append(String.format("💳 Payment Method: %s\n", payment))
+        .append(String.format("🛒 Products      : %s\n", print()))
+        .append("--------------------------------------------------\n");
         return sb.toString();
     }
 }

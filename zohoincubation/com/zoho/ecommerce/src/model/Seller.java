@@ -7,6 +7,7 @@ import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.view.CategoryHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.ProductHelper;
+import zohoincubation.com.zoho.ecommerce.src.view.UserHelper;
 
 public class Seller extends User {
     
@@ -16,7 +17,7 @@ public class Seller extends User {
     private String companyAddress;
     private List<Product> sellerProduct;
     private List<CardProduct> saledList; 
-    private final int seller = 2;
+    private final int SELLER = 2;
     
     public Seller(){}
 
@@ -33,12 +34,14 @@ public class Seller extends User {
     
     private void list(Scanner sc, User loggedInUser){ 
         this.operations = new Execute[]{
+            new UserHelper(loggedInUser, sc),
             new CategoryHelper(sc, loggedInUser),       
             new ProductHelper(sc, loggedInUser),
             new OrderHelper(sc, loggedInUser)
             
         };
     }
+    @Override
     public Execute[] getOperations(Scanner sc, User loggedInUser) {
         if (this.operations == null) {
             list(sc,loggedInUser);
@@ -94,10 +97,12 @@ public class Seller extends User {
         this.saledList = saledList;
     }
 
+    @Override
     public int getRole(){
-        return seller;
+        return SELLER;
     }
     
+    @Override
     public String toString() {
         return "Seller ID : " + getId() + "\n" +
                "Name : " + getName() + "\n" +

@@ -7,12 +7,15 @@ class OrderStatusUpdate {
 
     private static void printOrderStatus(String productName, int orderId, String transactionId, String status) {
         System.out.println("""
-            ======================================
-            📦 Client Name   : %s
-            🆔 Order ID       : %s
-            🔁 Transaction ID : %s
-            🚚 Order Status   : %s    
-            ======================================
+            ╔════════════════════════════════════════════════════╗
+            ║                    ORDER STATUS                    ║
+            ╠════════════════════════════════════════════════════╣
+            ║ 📦 Client Name    : %-30s ║
+            ║ 🆔 Order ID       : %-30s ║
+            ║ 🔁 Transaction ID : %-30s ║
+            ║ 🚚 Order Status   : %-30s ║
+            ╚════════════════════════════════════════════════════╝
+            
             """.formatted(productName, orderId, transactionId, status));
     }
 

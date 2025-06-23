@@ -3,9 +3,9 @@ package zohoincubation.com.zoho.ecommerce.src.internal;
 import zohoincubation.com.zoho.ecommerce.src.paymentCreditionals.IPaymentGateway;
 
 public class Gpay implements IPaymentGateway {
-    private double amount;
-    private String paymentMethod;
-    private String creditionals;
+    private final double amount;
+    private final String paymentMethod;
+    private final String creditionals;
 
     public Gpay(double amount, String paymentMethod, String creditionals) {
         this.amount = amount;
@@ -35,7 +35,6 @@ public class Gpay implements IPaymentGateway {
             } else {
                 System.out.println("Error: " + e.getMessage());
             }
-            return;
         }
     }
 

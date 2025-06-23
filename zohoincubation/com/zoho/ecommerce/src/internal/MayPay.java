@@ -4,9 +4,9 @@ import zohoincubation.com.zoho.ecommerce.src.paymentCreditionals.IPaymentGateway
 
 public class MayPay implements IPaymentGateway {
 
-    private double amount;
-    private String paymentMethod;
-    private String credentials;
+    private final double amount;
+    private final String paymentMethod;
+    private final String credentials;
 
     public MayPay(double amount, String paymentMethod, String credentials) {
         this.amount = amount;
@@ -28,19 +28,16 @@ public class MayPay implements IPaymentGateway {
             }
 
             switch (paymentMethod.toUpperCase()) {
-                case "CARD":
-                    System.out.println("Processing MayPay card payment of ₹" + amount + " using card: " + credentials);
-                    break;
-
-                case "UPI":
+                
+                case "UPI"->
                     System.out.println("Processing MayPay UPI payment of ₹" + amount + " from MayPay ID: " + credentials);
-                    break;
+                    
 
-                case "NETBANKING":
+                case "NETBANKING"->
                     System.out.println("Processing MayPay NetBanking payment of ₹" + amount + " via bank: " + credentials);
-                    break;
+                    
 
-                default:
+                default->
                     throw new IllegalArgumentException(paymentMethod + ": Unsupported payment method: " + paymentMethod);
             }
             System.out.println("✅ " + paymentMethod + " payment processed successfully.");

@@ -3,9 +3,9 @@ package zohoincubation.com.zoho.ecommerce.src.internal;
 import zohoincubation.com.zoho.ecommerce.src.paymentCreditionals.IPaymentGateway;
 
 public class Paytm implements IPaymentGateway {
-    private double amount;
-    private String paymentMethod;
-    private String walletId;
+    private final double amount;
+    private final String paymentMethod;
+    private final String walletId;
 
     public Paytm(double amount, String paymentMethod, String walletId) {
         this.amount = amount;
@@ -13,6 +13,7 @@ public class Paytm implements IPaymentGateway {
         this.walletId = walletId;
     }
 
+    @Override
     public void processPayment() {
         try {
             if (amount <= 0) {
@@ -35,7 +36,6 @@ public class Paytm implements IPaymentGateway {
             } else {
                 System.out.println("Error: " + e.getMessage());
             }
-            return;
         }
     }
 

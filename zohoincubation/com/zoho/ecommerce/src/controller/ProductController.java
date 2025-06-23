@@ -86,13 +86,13 @@ public class ProductController {
         return false;
     }
     public static List<Product> getSellerProducts(Category category , User loggedInUser) {
-        List<Product> products = new ArrayList<>();
-         for (Product product : category.getProduct()) {
-                if (product.getSeller().getId() == ((Seller) loggedInUser).getId()) {
-                    products.add(product);
-                }
+        List<Product> selleProducts = new ArrayList<>();
+         for (Product obj : category.getProduct()) {
+            if (obj.getSeller().getId() == ((Seller) loggedInUser).getId()) {
+                selleProducts.add(obj);
             }
-        return products;
+        }
+        return selleProducts;
     }
     public static   boolean isProductExistCard(List<CardProduct> product , int id) {
         for (CardProduct obj : product) {

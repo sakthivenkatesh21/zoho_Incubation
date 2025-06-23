@@ -2,7 +2,6 @@ package zohoincubation.com.zoho.ecommerce.src.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import zohoincubation.com.zoho.ecommerce.src.model.Category;
 import zohoincubation.com.zoho.ecommerce.src.model.Order;
 import zohoincubation.com.zoho.ecommerce.src.model.Product;
@@ -11,10 +10,10 @@ import zohoincubation.com.zoho.ecommerce.src.model.User;
 public class DataManager {
 
     private DataManager() {
-        user = new ArrayList<User>();
-        orders = new ArrayList<Order>();
-        product = new ArrayList<Product>();
-        category = new ArrayList<Category>();
+        user = new ArrayList<>();
+        orders = new ArrayList<>();
+        product = new ArrayList<>();
+        category = new ArrayList<>();
     }
 
     private final List<User> user;

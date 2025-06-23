@@ -9,6 +9,7 @@ import java.util.Scanner;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.ProductHelper;
+import zohoincubation.com.zoho.ecommerce.src.view.UserHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.WishlistHandler;
 
 public class Client extends User {
@@ -16,7 +17,7 @@ public class Client extends User {
     private Card card;
     private String address;
     private List<Order> previousOrderProduct;
-    private final int Customer = 1;
+    private final int CUSTOMER = 1;
     
     
     public Client() {}
@@ -30,9 +31,11 @@ public class Client extends User {
     }
     private void list(Scanner sc , User loggedInUser){
         this.operations = new Execute[]{
+            new UserHelper(loggedInUser, sc),
             new ProductHelper(sc, loggedInUser),
             new WishlistHandler(sc,loggedInUser),
             new OrderHelper(sc, loggedInUser),
+            
            
             
         };
@@ -69,10 +72,12 @@ public class Client extends User {
         this.previousOrderProduct = previousOrderProduct;
     }
 
+    @SuppressWarnings("override")
     public int getRole(){
-        return Customer;
+        return CUSTOMER;
     }
     
+    @Override
     public String toString(){
         System.out.println("Client ID : " + getId());
         System.out.println("Client Name : " + getName());

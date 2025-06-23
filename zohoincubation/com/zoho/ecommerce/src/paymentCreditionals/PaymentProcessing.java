@@ -1,7 +1,7 @@
 package zohoincubation.com.zoho.ecommerce.src.paymentCreditionals;
 
 public class PaymentProcessing {
-    private IPaymentGateway iPaymentGateway;
+    private final IPaymentGateway iPaymentGateway;
 
     public PaymentProcessing(IPaymentGateway iPaymentGateway) {
         this.iPaymentGateway = iPaymentGateway;
@@ -13,8 +13,6 @@ public class PaymentProcessing {
 
     public String processPayment() {
         iPaymentGateway.processPayment();
-        return iPaymentGateway.confirmPayment(
-            iPaymentGateway.generateTransactionId()
-        );
+        return iPaymentGateway.confirmPayment(iPaymentGateway.generateTransactionId());
     }
 }

@@ -1,7 +1,7 @@
 package zohoincubation.com.zoho.ecommerce.src.interfaceController;
 
 public interface Editable {
-    void add();
+    // void add();
     void update();
-    void delete();
+    // void delete();
 }

@@ -1,7 +1,6 @@
 package zohoincubation.com.zoho.ecommerce.src.model;
 
 import java.util.Scanner;
-
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 
 public abstract class User {
@@ -72,6 +71,7 @@ public abstract class User {
     }
 
     public void showMenu(Scanner sc,User loggedInUser){
+        System.out.println("Welcome  " + loggedInUser.getName() + " to the E-commerce Platform");
         while(true){
 
             for(int i = 0; i < this.getOperations(sc,loggedInUser).length; i++){
@@ -86,7 +86,6 @@ public abstract class User {
             }
             if(choice < 1 || choice > operations.length){
                 System.out.println("Invalid Choice");
-                continue;
             }
 
             else{
