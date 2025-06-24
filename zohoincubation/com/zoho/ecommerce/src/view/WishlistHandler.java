@@ -1,5 +1,6 @@
 package zohoincubation.com.zoho.ecommerce.src.view;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -47,7 +48,7 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
             System.out.println("2️⃣ View Wish List");
             System.out.println("3️⃣ Update Wish List");
             System.out.println("4️⃣ Delete from Wish List");
-            System.out.println("5️⃣ Exit");
+            System.out.println("0️⃣ Exit");
             System.out.println("========================================");
             System.out.print("Enter your choice: ");
             try {
@@ -58,7 +59,7 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
                     case 2 -> view();
                     case 3 -> update();
                     case 4 -> delete();
-                    case 5 -> {
+                    case 0 -> {
                         System.out.println("🚪 Exiting Wish List Management.");
                         return;
                     }
@@ -164,8 +165,9 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
             if (!obj.canAddToCard()) {
                 System.out.println("⚠️ " + obj.getProductName() + " Quantity Available: " + obj.getStock() + " Your Chosen Quantity: " + obj.getQuantity());
                 if (obj.getStock() > 0 ) {
+                    System.out.println(obj.getQuantity()+"Quantity"+obj.getStock()+"Stock");
                     obj.setQuantity(obj.getStock());
-                    // obj.setStock(obj.getStock() - obj.getQuantity());
+                   
 
                     System.out.println("✅ Available Stock " + obj.getQuantity() + " Updated to " + obj.getProductName());
                 } else {

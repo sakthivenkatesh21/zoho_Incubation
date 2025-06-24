@@ -60,6 +60,17 @@ public class CardProduct extends Product {
     public boolean canAddToCard() {
         return getStock() >= getQuantity();
     }
+    @Override
+    public String toString() {
+        System.out.println("\n========== Order Product ==========");
+        System.out.println("Name                 : " + getProductName());
+        System.out.println("Quantity Ordered     : " + quantity);
+        System.out.println("Price                : $" + getPrice()*getQuantity());
+        System.out.println("Date Added           : " + getFormattedDate() + " " + getFormattedTime());
+        System.out.println("Order Status         : " + producStatus);
+        System.out.println("==================================");
+        return "";
+    }
 
     // public boolean reStock() {
     //     if(canAddToCard()){

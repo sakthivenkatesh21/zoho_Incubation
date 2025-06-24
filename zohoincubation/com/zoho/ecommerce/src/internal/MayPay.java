@@ -41,9 +41,13 @@ public class MayPay implements IPaymentGateway {
                     throw new IllegalArgumentException(paymentMethod + ": Unsupported payment method: " + paymentMethod);
             }
             System.out.println("✅ " + paymentMethod + " payment processed successfully.");
-            
-        } catch (IllegalArgumentException e ) {
-                System.out.println(paymentMethod + " error: " + e.getMessage());       
+            Thread.sleep(2000);
+        } catch (IllegalArgumentException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                System.out.println("Payment processing interrupted.");
+            } else {
+                System.out.println(paymentMethod + " error: " + e.getMessage());
+            }
         }
           
     }

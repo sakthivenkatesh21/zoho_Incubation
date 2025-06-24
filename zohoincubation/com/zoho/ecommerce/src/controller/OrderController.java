@@ -23,8 +23,7 @@ public class OrderController {
                                     OrderStatus.CONFIRMED,amount,payment);
         updateSellerSales(card.getProduct());
         productOrder(order.getProduct(), card.getProduct());
-        // order.setProduct(productlist);
-        // card.getProduct().clear();
+        card.getProduct().clear();
         orders.add(order);
         
         ((Client)loggedInUser).getPreviousOrderProduct().add(order);
@@ -33,7 +32,8 @@ public class OrderController {
     }
     private static void updateSellerSales(List<CardProduct> products) {
         for(CardProduct product : products) {
-            product.getSeller().setSoldItem(product.getSeller().getSoldItem() + 1);
+            product.setProducStatus(OrderStatus.CONFIRMED);
+            product.getSeller().setSoldItem(product.getSeller().getSoldItem() + product.getQuantity());
             product.getSeller().setProfit(product.getSeller().getProfit() +(product.getPrice()*product.getQuantity()));
             product.getSeller().getSaledList().add(product);
         }
@@ -42,7 +42,7 @@ public class OrderController {
     private  static List<CardProduct>  productOrder(List<CardProduct> orderProducts, List<CardProduct> cardProducts) {
         for (CardProduct product : cardProducts) {    
                 orderProducts.add(product);
-                cardProducts.remove(product);
+               
         }   
         return orderProducts;
     }

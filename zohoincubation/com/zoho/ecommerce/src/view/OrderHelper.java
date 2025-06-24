@@ -92,6 +92,10 @@ public class OrderHelper implements Execute, Viewable {
             case  "Y" :
                 System.out.println("✅ Proceeding to checkout...");
                 wishlistHandler.checkQuantityExist(card.getProduct());
+                if( card.getProduct().isEmpty()) {
+                    System.out.println("⚠️ No products in the card to checkout.");
+                    return;
+                }
                 double cardTotal = card.calculateCardTotal();
                 String payment = PaymentHelper.paymentProcess(sc, cardTotal);
                 if (payment == null) {
@@ -99,7 +103,7 @@ public class OrderHelper implements Execute, Viewable {
                     return;
                 }
                 Order order = OrderController.createOrder(card, cardTotal, payment, loggedInUser);
-                if (order != null &&  ProductController.reduceStock(card.getProduct())) {
+                if (order != null &&  ProductController.reduceStock(order.getProduct())) {
                     OrderStatusUpdate.flow(order);
                    
                 } else {

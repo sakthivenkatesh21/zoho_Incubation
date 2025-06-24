@@ -92,7 +92,7 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
         String productDescription = validator.address("📝 Enter a New Product Description:");
         double productPrice = getPrice("💰 Enter the new Product Price:");
         int productStock = getStock("📦 Enter the new Product Stock:");
-        sc.nextLine();
+        // sc.nextLine();
         Product product = ProductController.createProduct(productName,productDescription,productPrice,productStock,category,loggedInUser);
         if (product == null) {
             System.out.println("❌ Product with the same name already exists.");
@@ -238,10 +238,11 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
             System.out.println("✅ Product found in Category: " + obj.getCategory().getName());
             System.out.println("📝 Product Details: \n \t " + obj);
         }
-        System.out.println("****************************************");
-        System.out.println("*                                      *");
+        // System.out.println("****************************************");
+        // System.out.println("*                                      *");
         System.out.println(" *        🔎 Product Search Options    *" );
-        System.out.println("*                                      *");
+        // System.out.println("*                                      *");
+        // System.out.println("****************************************");
         System.out.println("****************************************");
         System.out.println("1. ❤️ Add to Wish List");
         System.out.println("2. 🔎 Search Product Again");

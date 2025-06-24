@@ -27,12 +27,16 @@ public class Gpay implements IPaymentGateway {
 
             System.out.println("Processing payment of " + amount + " using " + paymentMethod + ".");
             System.out.println("Payment processed successfully.");
-            // return confirmPayment(generateTransactionId());
-
-        } catch (IllegalArgumentException e) {
+            Thread.sleep(2000);
+        } catch (IllegalArgumentException | InterruptedException e) {
+            if(e instanceof InterruptedException) {
+                System.out.println("Payment processing interrupted.");
+            }
+            else 
             System.out.println("Error: " + e.getMessage());
             
         }
+        
     }
 
     @Override

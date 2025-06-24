@@ -25,13 +25,13 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
 
     @Override
     public String getfunctionName() {
-        return "Add Category";
+        return " Category Management";
     }
 
     @Override
     public void operation(Scanner sc, User loggedInUser) {
         System.out.println("🌟✨ Welcome to Category Management ✨🌟");
-        System.out.println("👤 Seller Name: " + loggedInUser.getName());
+        System.out.println("👤    Name: " + loggedInUser.getName());
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         while (true) {
             try {
@@ -90,7 +90,7 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
         }
         if(loggedInUser.getRole() == CLIENT) {
             while(true){
-                System.out.println("1. View Categories for Products\n2. View All Categories\n0. Exit");
+                System.out.println("1. View Categories BY Products\n2. View All Categories\n0. Exit");
                 System.out.println("🔢 Enter your choice:");
                 try {
                     int choice = sc.nextInt();

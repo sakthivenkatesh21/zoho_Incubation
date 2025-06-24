@@ -103,29 +103,27 @@ public class Order {
         return DateTimeFormatter.ofPattern("hh:mm").format(orderTime);
     }
 
-    private String print() {
-        StringBuilder sb = new StringBuilder();
+    public String  toString() {
+        System.out.println("--------------------------------------------------");
+        System.out.println("            🧾 Order Summary                      ");
+        System.out.println("--------------------------------------------------");
+        System.out.printf("📦 Order ID      : %s%n", id);
+        System.out.printf("👤 Client        : %s%n", client.getName());
+        System.out.printf("📍 Address       : %s%n", address);
+        System.out.printf("🕒 Order Time    : %s %s%n", getFormattedDate(), getFormattedTime());
+        System.out.printf("📌 Status        : %s%n", status);
+        System.out.printf("💰 Total Amount  : $%.2f%n", total);
+        System.out.printf("💳 Payment Method: %s%n", payment);
+        System.out.println("🛒 Products      ");
+        System.out.println("--------------------------------------------------");
         for (CardProduct prod : product) {
-            sb.append(String.format("🛍️ %s (Qty: %d, Price: $%.2f)\n", prod.getProductName(), prod.getQuantity(), prod.getPrice()));
+            System.out.println("Product Name: " + prod.getProductName());
+            System.out.println("Quantity: " + prod.getQuantity());
+            System.out.println("Price: $" + prod.getPrice()*prod.getQuantity());
+            System.out.println("Seller Info: " + prod.getSeller().getName()+"Company: " + prod.getSeller().getCompany());
+            System.out.println("--------------------------------------------------");
         }
-        return sb.toString();
+        System.out.println("--------------------------------------------------");
+        return"";
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("--------------------------------------------------\n")
-        .append("🧾 Order Summary\n")
-        .append("--------------------------------------------------\n")
-        .append(String.format("📦 Order ID      : %s\n", id))
-        .append(String.format("👤 Client        : %s\n", client.getName()))
-        .append(String.format("📍 Address       : %s\n", address))
-        .append(String.format("🕒 Order Time    : %s %s\n", getFormattedDate(), getFormattedTime()))
-        .append(String.format("📌 Status        : %s\n", status))
-        .append(String.format("💰 Total Amount  : $%.2f\n", total))
-        .append(String.format("💳 Payment Method: %s\n", payment))
-        .append(String.format("🛒 Products      : %s\n", print()))
-        .append("--------------------------------------------------\n");
-        return sb.toString();
-    }
-}
+   }

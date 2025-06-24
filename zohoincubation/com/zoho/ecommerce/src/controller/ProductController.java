@@ -113,10 +113,11 @@ public class ProductController {
 
     public static  boolean  reduceStock(List<CardProduct> cardProducts){
         for(CardProduct obj : cardProducts){
-            if(isProductExist(obj.getId())==null){
+            Product product = isProductExist(obj.getId());
+            if(product==null){
                 return false;
             }
-            isProductExist(obj.getId()).setStock(isProductExist(obj.getId()).getStock() - obj.getQuantity());
+            product.setStock(product.getStock() - obj.getQuantity());
         }
         return true;
     }

@@ -182,7 +182,7 @@ public class UserHelper implements Execute, Editable, Viewable {
         int  userType = 0;
         while(true){
             try{
-                System.out.println("👥 Are you Signing Up as Client or Seller?\n 1️⃣ Client\n 2️⃣ Seller (Enter @ Number)");
+                System.out.println("👥 Are you Signing Up as Client or Seller?\n 1️⃣ Client\n 2️⃣ Seller\n (Enter a Number)");
                 userType = sc.nextInt();
                 sc.nextLine();
                 if(userType == 1 || userType == 2) break;
