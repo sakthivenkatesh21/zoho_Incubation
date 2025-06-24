@@ -1,7 +1,6 @@
 package zohoincubation.com.zoho.ecommerce.src.controller;
 
 import java.util.List;
-
 import zohoincubation.com.zoho.ecommerce.src.model.Category;
 
 public class CategoryController {
@@ -32,15 +31,6 @@ public class CategoryController {
         Category newCategory = new Category(++idGenerator, categoryName, categoryDescription);
         category.add(newCategory);
         return newCategory;
-    }
-
-    public static Category UpdateCategory(Category obj, String categoryName, String categoryDescription) {
-        if (isCategoryExists(categoryName)) {
-            return null;
-        }
-        obj.setName(categoryName);
-        obj.setDescription(categoryDescription);
-        return obj;
     }
 
     public static boolean removeCategory(Category obj) {

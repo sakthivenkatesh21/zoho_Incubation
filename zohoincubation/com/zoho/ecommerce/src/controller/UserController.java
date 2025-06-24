@@ -20,17 +20,18 @@ public class UserController {
         userList.add(user);
         return user;
     }
-    public static boolean isMailExists(String email) {
+    public static boolean isMailExists(String email,User loggedInUser) {
         for (User user : userList) {
-            if (user.getEmail().equals(email)) {
+            if (user.getEmail().equals(email) && ( loggedInUser != null && !user.getEmail().equals(loggedInUser.getEmail()))) {
                 return true;
             }
         }
         return false;
     }
-    public static boolean isPhoneExists(String phone) {
+    public static boolean isPhoneExists(String phone,User loggedInUser) {
+
         for (User user : userList) {
-            if (user.getPhone().equals(phone)) {
+            if (user.getPhone().equals(phone) && (loggedInUser != null && !user.getPhone().equals(loggedInUser.getPhone()))) {
                 return true;
             }
         }

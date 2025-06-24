@@ -76,10 +76,6 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
         
     @Override
     public void add() {
-        if (loggedInUser.getRole() == 2) {
-            System.out.println("⚠️ You are not authorized to add products to the cart. Only buyers can add products to the cart.");
-            return;
-        }
         card = ((Client) loggedInUser).getcard();
         System.out.println("🛒 Enter a Quantity for the product: ");
         int quantity = sc.nextInt();
@@ -88,8 +84,15 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
             System.out.println("⚠️ Product already exists in the cart. Please update the quantity instead.");
             return;
         }
-        CardProduct cardProduct = new CardProduct(card.getProduct().size() + 1, product, quantity);
-        if (cardProduct.canAddToCard() && quantity <= 10 && quantity > 0) {
+        // CardProduct cardProduct = new CardProduct(card.getProduct().size() + 1, product, quantity);
+
+        CardProduct cardProduct = new CardProduct(product, quantity);
+        if (cardProduct.canAddToCard()  && quantity > 0) {
+            if(quantity > 10) {
+                System.out.println("⚠️ You cannot add more than 10 items to the cart.");
+                quantity = 10;
+                cardProduct.setQuantity(quantity);
+            }
             card.getProduct().add(cardProduct);
             System.out.println("✅ Product added to the cart successfully: " + product.getProductName());
             System.out.println("📦 Updated Quantity: " + cardProduct.getQuantity());
@@ -158,18 +161,24 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
 
     public void checkQuantityExist(List<CardProduct> cardProduct) {
         for (CardProduct obj : cardProduct) {
-            if (!obj.reStock()) {
+            if (!obj.canAddToCard()) {
                 System.out.println("⚠️ " + obj.getProductName() + " Quantity Available: " + obj.getStock() + " Your Chosen Quantity: " + obj.getQuantity());
-                if (obj.getStock() > 0) {
+                if (obj.getStock() > 0 ) {
                     obj.setQuantity(obj.getStock());
-                    obj.reStock();
+                    // obj.setStock(obj.getStock() - obj.getQuantity());
+
                     System.out.println("✅ Available Stock " + obj.getQuantity() + " Updated to " + obj.getProductName());
                 } else {
                     System.out.println("❌ The Product " + obj.getProductName() + " is Out Of Stock.");
                     System.out.println("🗑️ It has been removed from the cart.");
-                    card.getProduct().remove(cardProduct);
+                    card.getProduct().remove(obj);
                 }
             }
+            else{
+                // obj.setStock(obj.getStock() - obj.getQuantity());
+                System.out.println("Product Choosed :"+obj.getProductName());
+            }
+
         }
     }
 

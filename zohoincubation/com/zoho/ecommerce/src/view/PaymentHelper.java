@@ -28,10 +28,8 @@ public class PaymentHelper {
                 case 3 -> {
                     return maybepay(sc, amount);
                 }
-                default -> {
-                    System.out.println("❌ Invalid payment option selected. Please try again.");
-                    return null;
-                }
+                default -> System.out.println("❌ Invalid payment option selected. Please try again.");
+                
             }
         } catch (InputMismatchException e) {
             System.out.println("❌ Invalid input. Please enter a number.");
@@ -45,7 +43,7 @@ public class PaymentHelper {
 
     private static String maybepay(Scanner sc, double amount ) {
         System.out.println("🔄 Processing payment through MayPay...");
-        System.out.println("💳 Payment methods available: 1. UPI 📱 \n2. NetBanking 🏦");
+        System.out.println("💳 Payment methods available: \n1. UPI 📱 \n2. NetBanking 🏦");
        
         try {
             int paymentMode = sc.nextInt();
@@ -63,7 +61,7 @@ public class PaymentHelper {
                 }
                 default -> {
                     System.out.println("❌ Invalid payment mode selected. Please try again.");
-                    return null;
+   
                 }
             }
         } catch (InputMismatchException e) {

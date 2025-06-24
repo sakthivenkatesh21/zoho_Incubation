@@ -13,7 +13,7 @@ public class Gpay implements IPaymentGateway {
         this.creditionals = creditionals;
     }
     @Override
-    public String processPayment() {
+    public void processPayment() {
         try {
             if (amount <= 0) {
                 throw new IllegalArgumentException("Invalid payment amount. Payment cannot be processed.");
@@ -27,16 +27,12 @@ public class Gpay implements IPaymentGateway {
 
             System.out.println("Processing payment of " + amount + " using " + paymentMethod + ".");
             System.out.println("Payment processed successfully.");
-            Thread.sleep(2000);
+            // return confirmPayment(generateTransactionId());
 
-        } catch (IllegalArgumentException | InterruptedException e) {
-            if (e instanceof InterruptedException) {
-                System.out.println("Payment process was interrupted. Please try again.");
-            } else {
-                System.out.println("Error: " + e.getMessage());
-            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+            
         }
-        return confirmPayment(generateTransactionId());
     }
 
     @Override
@@ -50,7 +46,7 @@ public class Gpay implements IPaymentGateway {
             System.out.println("Invalid transaction ID.");
             return null;
         }
-
-        return "✅" + paymentMethod + " confirmed.\n Transaction ID: " + transactionId;
+        System.out.println("✅ GPay payment confirmed.");
+        return  transactionId;
     }
 }

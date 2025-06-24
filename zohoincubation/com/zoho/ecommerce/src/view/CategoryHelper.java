@@ -15,6 +15,9 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
     private final Scanner sc;
     private final User loggedInUser;
 
+    private final int CLIENT = 1;
+    private final int SELLER = 2;
+
     public CategoryHelper(Scanner sc, User loggedInUser) {
         this.sc = sc;
         this.loggedInUser = loggedInUser;
@@ -27,20 +30,31 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
 
     @Override
     public void operation(Scanner sc, User loggedInUser) {
-        System.out.println("🌟 Welcome to Category Management 🌟");
-        System.out.println("👤 Seller Name : " + loggedInUser.getName());
+        System.out.println("🌟✨ Welcome to Category Management ✨🌟");
+        System.out.println("👤 Seller Name: " + loggedInUser.getName());
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         while (true) {
             try {
-                System.out.println("📋 Choose an option:");
-                System.out.println("1️⃣ Add Category \n2️⃣ View Categories \n3️⃣ Delete Category \n4️⃣ Update Category \n5️⃣ Exit");
+                if (loggedInUser.getRole() == CLIENT) {
+                    System.out.println("1️⃣ View Categories Products \n0️⃣ Exit");
+                } else if (loggedInUser.getRole() == SELLER) {
+                    System.out.println("1️⃣ Add Category \n2️⃣ View Categories \n3️⃣ Delete Category \n4️⃣ Update Category \n0️⃣ Exit");
+                }
+                System.out.println("🔢 Enter your choice:");
                 int choice = sc.nextInt();
                 sc.nextLine();
                 switch (choice) {
-                    case 1 -> add();
+                    case 1 -> {
+                        if (loggedInUser.getRole() == SELLER) {
+                            add();
+                        } else {
+                            view();
+                        }
+                    }
                     case 2 -> view();
                     case 3 -> delete();
                     case 4 -> update();
-                    case 5 -> {
+                    case 0 -> {
                         System.out.println("🚪 Exiting Category Management. Goodbye! 👋");
                         return;
                     }
@@ -48,18 +62,23 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
                 }
             } catch (InputMismatchException e) {
                 System.out.println("❌ Invalid input. Please enter a valid number.");
-                sc.nextLine(); 
-            } 
+                sc.nextLine();
+            } catch (Exception e) {
+                System.out.println("❌ An unexpected error occurred: " + e.getMessage());
+                sc.nextLine();
+            }
         }
     }
 
     @Override
     public void add() {
-        Object[] data = getDetails();
-        if (CategoryController.createCategory(data[0].toString(), data[1].toString()) != null) {
+        ValidData validData = new ValidData(sc);
+        String categoryName = validData.name("📝 Enter the Category Name:");
+        String categoryDescription = validData.address("📝 Enter the Category Description:");
+        if (CategoryController.createCategory(categoryName, categoryDescription) != null) {
             System.out.println("✅ Category Created Successfully 🎉");
         } else {
-            System.out.println("⚠️ Category with name '" + data[0].toString() + "' already exists.");
+            System.out.println("⚠️ Category with name '" + categoryName + "' already exists.");
         }
     }
 
@@ -69,9 +88,53 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
             System.out.println("📂 No categories available. Please add a category first.");
             return;
         }
+        if(loggedInUser.getRole() == CLIENT) {
+            while(true){
+                System.out.println("1. View Categories for Products\n2. View All Categories\n0. Exit");
+                System.out.println("🔢 Enter your choice:");
+                try {
+                    int choice = sc.nextInt();
+                    sc.nextLine();
+                    switch(choice){
+                        case 1-> viewCategoryForProducts();
+                        case 2-> viewAllCategories();
+                        case 0-> {
+                            System.out.println("🚪 Exiting Category View.");
+                            return;
+                        }
+                        default -> System.out.println("❌ Invalid choice. Please try again.");
+                    }
+                }catch (InputMismatchException e) {
+                    System.out.println("❌ Invalid input. Please enter a valid number.");
+                }         
+            }
+        }
+        else{
+            viewAllCategories();
+        }
+    }
+    // help methods for view prining all categories 
+    private  void viewAllCategories(){
         System.out.println("📋 Available Categories:");
         for (int i = 0; i < CategoryController.getCategories().size(); i++) {
             System.out.println((i + 1) + ". " + CategoryController.getCategories().get(i).getName());
+        }
+    }
+    // help methods for view prining all categories and products in a category
+    private void viewCategoryForProducts(){
+        Category category = getCategory(sc);
+        if (category == null) {
+            System.out.println("❌ No categories available to view products.");
+            return;
+        }
+        if (category.getProduct().isEmpty()) {
+            System.out.println("❌ No products available in this category.");
+        } else {
+            System.out.println("📦 Products in Category: " + category.getName());
+            System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            for (int i = 0; i < category.getProduct().size(); i++) {
+                System.out.println((i + 1) + ". " + category.getProduct().get(i));
+            }
         }
     }
 
@@ -81,20 +144,31 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
             System.out.println("📂 No categories available to update.");
             return;
         }
-        int categoryIndex = checkCategory();
-        if (categoryIndex == -1) {
-            System.out.println("❌ Invalid category selected.");
+        Category category = checkGetCategory();
+        if (category == null) {
+            System.out.println("❌ No category found with the given number.");
             return;
         }
-        Category category = CategoryController.getCategories().get(categoryIndex);
         System.out.println("✏️ You are about to update the category: " + category.getName());
-        Object[] data = getDetails();
-        Category obj = CategoryController.UpdateCategory(category, data[0].toString(), data[1].toString());
-        if (obj == null) {
-            System.out.println("❌ Failed to update category. Please try again.");
-        } else {
-            System.out.println("✅ Category updated successfully: \n " + obj);
+        System.out.println("1.Category Name\n2.Category Description\n3.Exit\nEnter the number of the field you want to update:");
+        ValidData validData = new ValidData(sc);
+        try {
+            switch (sc.nextInt()) {
+                case 1 -> category.setName(validData.name("📝 Enter the new Category Name:"));
+                case 2 -> category.setDescription(validData.address("📝 Enter the new Category Description:"));
+                case 3 -> {
+                    System.out.println("🚪 Exiting update operation.");
+                    return;
+                }
+                default -> {
+                    System.out.println("❌ Invalid choice. Please select 1 or 2.");
+                    return;
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("❌ Invalid input. Please enter a valid number.");
         }
+        System.out.println("✅ Category updated successfully.");
     }
 
     @Override
@@ -103,25 +177,25 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
             System.out.println("❌ No categories available to delete.");
             return;
         }
-        int categoryIndex = checkCategory();
-        if (categoryIndex == -1) {
-            System.out.println("❌ Invalid category selected.");
+        Category category = checkGetCategory();
+        if (category == null) {
+            System.out.println("❌ No category found with the given number.");
             return;
         }
-        System.out.println("🗑️ You have selected to delete the category: " + CategoryController.getCategories().get(categoryIndex).getName());
-        System.out.println("⚠️ Are you sure you want to delete this category? \n This action can delete Your Product List Completely \n \t(yes/no) || (y/n)");
+
+        System.out.println("🗑️ You have selected to delete the category: " + category.getName());
+        System.out.println("This action can delete Your Product List Completely \n \t(yes/no) || (y/n)");
         String confirmation = sc.nextLine().trim().toLowerCase();
-        if (confirmation.equalsIgnoreCase("yes") || confirmation.equalsIgnoreCase("y")) {
-            if (CategoryController.removeCategory(CategoryController.getCategories().get(categoryIndex))) {
+        if (confirmation.equals("yes") || confirmation.equals("y")) {
+            if (CategoryController.removeCategory(category))
                 System.out.println("✅ Category deleted successfully.");
-            } else {
+            else
                 System.out.println("❌ Failed to delete category. Please try again.");
-            }
         } else {
             System.out.println("🚫 Category deletion cancelled.");
         }
     }
-
+// help methods for  showing category in  for a product helper
     public static Category getCategory(Scanner sc) {
         if (CategoryController.isCategoryEmpty()) {
             return null;
@@ -140,22 +214,16 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
         return CategoryController.getCategories().get(categoryIndex);
     }
 
-    private int checkCategory() {
-        view();
+//  common logic for update and delete
+    private Category checkGetCategory() {
+        viewAllCategories();
         System.out.println("🔢 Enter the number of the category you want:");
         int categoryIndex = sc.nextInt() - 1;
         sc.nextLine();
         if (categoryIndex < 0 || categoryIndex >= CategoryController.getCategories().size()) {
             System.out.println("❌ Invalid category number. Please try again.");
-            return -1;
+            return null;
         }
-        return categoryIndex;
-    }
-
-    private Object[] getDetails() {
-        ValidData validData = new ValidData(sc);
-        String categoryName = validData.name("📝 Enter the Category Name:");
-        String categoryDescription = validData.address("📝 Enter the Category Description:");
-        return new Object[]{categoryName, categoryDescription};
+        return CategoryController.getCategories().get(categoryIndex);
     }
 }

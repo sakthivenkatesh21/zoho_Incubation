@@ -3,7 +3,7 @@ package zohoincubation.com.zoho.ecommerce.src.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Navigation {
+public  class Navigation {
 
     private final Scanner sc;
     private final LoggingCredentials credentials;
@@ -41,7 +41,6 @@ public class Navigation {
             }
         }
     }
-
     private void exit(Scanner sc) {
         try (sc) {
             System.out.println("Thank you for using E - Commerce");

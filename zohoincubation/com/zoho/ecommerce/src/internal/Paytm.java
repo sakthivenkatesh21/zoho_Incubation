@@ -14,7 +14,7 @@ public class Paytm implements IPaymentGateway {
     }
 
     @Override
-    public String processPayment() {
+    public void processPayment() {
         try {
             if (amount <= 0) {
                 throw new IllegalArgumentException("Invalid payment amount. Payment cannot be processed.");
@@ -28,16 +28,10 @@ public class Paytm implements IPaymentGateway {
 
             System.out.println("Processing payment of " + amount + " using " + paymentMethod + " with wallet ID: " + walletId + ".");
             System.out.println("Payment processed successfully.");
-            Thread.sleep(2000);
-
-        } catch (IllegalArgumentException | InterruptedException e) {
-            if (e instanceof InterruptedException) {
-                System.out.println("Payment process was interrupted. Please try again.");
-            } else {
-                System.out.println("Error: " + e.getMessage());
-            }
+            // return confirmPayment(generateTransactionId());
+        } catch (IllegalArgumentException  e) {
+            System.out.println("Error: " + e.getMessage());           
         }
-        return confirmPayment(generateTransactionId());
     }
 
     @Override
@@ -51,7 +45,7 @@ public class Paytm implements IPaymentGateway {
             System.out.println("Invalid transaction ID.");
             return null;
         }
-
-        return "✅" + paymentMethod + " confirmed.\n Transaction ID: " + transactionId;
+        System.out.println("✅ " + paymentMethod + " payment confirmed.");
+        return transactionId;
     }
 }

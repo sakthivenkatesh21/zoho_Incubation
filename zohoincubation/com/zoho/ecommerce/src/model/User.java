@@ -74,9 +74,11 @@ public abstract class User {
         System.out.println("Welcome  " + loggedInUser.getName() + " to the E-commerce Platform");
         while(true){
 
-            for(int i = 0; i < this.getOperations(sc,loggedInUser).length; i++){
-                System.out.println((i+1)+"."+this.operations[i].getfunctionName());
+            System.out.println("\n========== MENU ==========");
+            for (int i = 0; i < this.getOperations(sc, loggedInUser).length; i++) {
+                System.out.println((i + 1) + ". " + this.operations[i].getfunctionName());
             }
+            System.out.println("==========================\n");
             System.out.println("Enter a Choice - Zero(0) to Exit");
             int choice = sc.nextInt(); 
             sc.nextLine();

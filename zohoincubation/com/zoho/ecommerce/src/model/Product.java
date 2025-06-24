@@ -95,7 +95,7 @@ public class Product {
           .append(String.format("Price       : $%.2f\n", getPrice()))
           .append(String.format("Quantity    : %d\n", getStock()))
           .append(String.format("Description : %s\n", getDescription()))
-          .append(String.format("Seller      : %s\n", getSeller() != null ? getSeller().getName() : "N/A"))
+          .append(String.format("Seller      : %s\n", getSeller().getName() ))
           .append("========================================\n");
         return sb.toString();
     }

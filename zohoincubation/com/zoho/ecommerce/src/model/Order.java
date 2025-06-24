@@ -20,7 +20,7 @@ public class Order {
     }
 
     public Order(int id, Client client, String address, OrderStatus status, double total,
-                 String payment, List<CardProduct> product) {
+                 String payment) {
         this.id = id;
         this.client = client;
         this.address = address;
@@ -28,7 +28,7 @@ public class Order {
         this.status = status;
         this.total = total;
         this.payment = payment;
-        this.product = product;
+        this.product = new ArrayList<>();
     }
 
     public String getAddress() {

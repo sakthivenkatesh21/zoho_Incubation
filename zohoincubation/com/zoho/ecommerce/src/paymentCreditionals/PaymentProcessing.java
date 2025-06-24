@@ -12,6 +12,7 @@ public class PaymentProcessing {
     }
 
     public String processPayment() {
-        return iPaymentGateway.processPayment();
+        iPaymentGateway.processPayment();
+        return iPaymentGateway.confirmPayment(iPaymentGateway.generateTransactionId());
     }
 }

@@ -14,6 +14,9 @@ public class UserHelper implements Execute, Editable, Viewable {
     private final User loggedInUser;
     private final Scanner sc;
 
+    private final int CLIENT =1;
+    private final int SELLER =2;
+
     public UserHelper(User loggedInUser, Scanner sc) {
         this.loggedInUser = loggedInUser;
         this.sc = sc;
@@ -59,10 +62,10 @@ public class UserHelper implements Execute, Editable, Viewable {
 
     @Override
     public void view() {
-        String role = loggedInUser.getRole() == 1 ? "👤 Client" : "🏢 Seller";
+        String role = loggedInUser.getRole() == CLIENT ? "👤 Client" : "🏢 Seller";
         System.out.println("""
                 ╔═══════════════════════════════════════════════════╗
-               ||                📋 USER INFORMATION                ||  
+                |                📋 USER INFORMATION                |  
                 ╚═══════════════════════════════════════════════════╝
                 """);
 
@@ -71,7 +74,7 @@ public class UserHelper implements Execute, Editable, Viewable {
         System.out.printf("📧 Email             : %-30s%n", loggedInUser.getEmail());
         System.out.printf("🆔 User ID           : %-30s%n", loggedInUser.getId());
 
-        if (loggedInUser.getRole() == 2) {
+        if (loggedInUser.getRole() == SELLER) {
             Seller seller = (Seller) loggedInUser;
             System.out.printf("💰 Profit Earned     : ₹%-29.2f%n", seller.getProfit());
             System.out.printf("📦 Products Sold     : %-30d%n", seller.getSoldItem());
@@ -86,22 +89,22 @@ public class UserHelper implements Execute, Editable, Viewable {
         while (true) {
             System.out.println("""
                     ╔═══════════════════════════════════════════════════╗
-                   ||           ✏️ UPDATE USER INFORMATION MENU         ||
+                    |           ✏️ UPDATE USER INFORMATION MENU          |
                     ╚═══════════════════════════════════════════════════╝
                     1️⃣  🧑  Update Name
                     2️⃣  📱  Update Phone Number
                     3️⃣  📧  Update Email
                     4️⃣  🔒  Update Password
                     5️⃣  🚻  Update Gender""");
-            if (loggedInUser.getRole() == 1) {
+            if (loggedInUser.getRole() == CLIENT) {
                 System.out.println("6️⃣  🏠  Update Address (Client)");
-            } else if (loggedInUser.getRole() == 2) {
+            } else if (loggedInUser.getRole() == SELLER) {
                 System.out.println("""
-                        6️⃣  🏢  Update Company Name (Seller)
-                        7️⃣  📍  Update Company Address (Seller)""");
+                         6️⃣  🏢  Update Company Name (Seller)
+                         7️⃣  📍  Update Company Address (Seller)""");
             }
             System.out.println("""
-                    0️⃣  ❌  Exit Update Menu
+                   0️⃣  ❌  Exit Update Menu
                     ════════════════════════════════════════════════════
                     """);
             System.out.print("👉 Enter your choice: ");
@@ -116,15 +119,20 @@ public class UserHelper implements Execute, Editable, Viewable {
                         System.out.println("✅ Name updated successfully." + loggedInUser.getName());
                     }
                     case 2 -> {
-                        loggedInUser.setPhone(isPhoneExists(check.phone("📱 Enter new phone number: "), check));
+                        loggedInUser.setPhone(isPhoneExists(check.phone("📱 Enter new phone number: "), check,loggedInUser));
                         System.out.println("✅ Phone number updated successfully." + loggedInUser.getPhone());
                     }
                     case 3 -> {
-                        loggedInUser.setEmail(isEmailExists(check.email("📧 Enter new email: "), check));
+                        loggedInUser.setEmail(isEmailExists(check.email("📧 Enter new email: "), check,loggedInUser));
                         System.out.println("✅ Email updated successfully." + loggedInUser.getEmail());
                     }
                     case 4 -> {
-                        loggedInUser.setPassword(check.password("🔒 Enter new password: "));
+                        String newPass =check.password("🔒 Enter new password: ");
+                        while(newPass.equals(loggedInUser.getPassword())) {
+                            System.out.println("❌ New password cannot be the same as the old one. Please enter a different password.");
+                            newPass = check.password("🔒 Enter new password: ");
+                        }
+                        loggedInUser.setPassword(newPass);
                         System.out.println("✅ Password updated successfully.");
                     }
                     case 5 -> {
@@ -164,45 +172,48 @@ public class UserHelper implements Execute, Editable, Viewable {
         }
     }
 
-    public static String[] getDetails(Scanner sc) {
+    public static String[] getDetails(Scanner sc,User loggedInUser) {
         ValidData check = new ValidData(sc);
         String name = check.name("🧑 Enter your Name :");
-        String phone = isPhoneExists(check.phone("📱 Enter a valid phone number: "), check);
-        String email = isEmailExists(check.email("📧 Enter a valid email address: "), check);
+        String phone = isPhoneExists(check.phone("📱 Enter a valid phone number: "), check,loggedInUser);
+        String email = isEmailExists(check.email("📧 Enter a valid email address: "), check,loggedInUser);
         String password = check.password("🔒 Type your Password:");
         String gender = check.gender("🚻 Enter your Gender:");
-
-        System.out.println("👥 Are you Signing Up as Client or Seller?\n 1️⃣ Client\n 2️⃣ Seller (Enter @ Number)");
-        int userType = sc.nextInt();
-        sc.nextLine();
-
-        switch (userType) {
-            case 1 -> {
-                String address = check.address("🏠 Enter Address:");
-                return new String[]{name, phone, email, password, gender, address};
+        int  userType = 0;
+        while(true){
+            try{
+                System.out.println("👥 Are you Signing Up as Client or Seller?\n 1️⃣ Client\n 2️⃣ Seller (Enter @ Number)");
+                userType = sc.nextInt();
+                sc.nextLine();
+                if(userType == 1 || userType == 2) break;
+                System.out.println("❌ Invalid User Type. Please enter 1 for Client or 2 for Seller.");
+            } catch (InputMismatchException e) {
+                System.out.println("❌ Invalid input. Please enter a valid number.");
+                sc.nextLine(); 
             }
-            case 2 -> {
-                String company = check.name("🏢 Enter a Company Name :");
-                String companyAddress = check.address("📍 Enter a Company Address :");
-                return new String[]{name, phone, email, password, gender, company, companyAddress};
-            }
-            default -> {
-                System.out.println("❌ Invalid User Type");
-                return null;
-            }
+        }       
+        if(userType ==1){
+            return new String[]{name, phone, email, password, gender, check.address("🏠 Enter Address:")};   
         }
-    }
+        else {
+            return new String[]{name, phone, email, password, gender, check.name("🏢 Enter a Company Name :"), check.address("📍 Enter a Company Address :")};
+        }           
+    }        
+            
+        
 
-    private static String isEmailExists(String email, ValidData check) {
-        while (UserController.isMailExists(email)) {
+
+    private static String isEmailExists(String email, ValidData check,User loggedInUser) {
+        while (UserController.isMailExists(email,loggedInUser)) {
             System.out.println("❌ Email already exists. Please try again with a different email.");
             email = check.email("📧 Enter a valid email address: ");
         }
         return email;
     }
 
-    private static String isPhoneExists(String phone, ValidData check) {
-        while (UserController.isPhoneExists(phone)) {
+    private static String isPhoneExists(String phone, ValidData check,User loggedInUser) {
+        while (UserController.isPhoneExists(phone, loggedInUser)) {
+            
             System.out.println("❌ Phone number already exists. Please try again with a different number.");
             phone = check.phone("📱 Enter a valid phone number: ");
         }

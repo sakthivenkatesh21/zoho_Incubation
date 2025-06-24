@@ -3,6 +3,7 @@ package zohoincubation.com.zoho.ecommerce.src.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import zohoincubation.com.zoho.ecommerce.src.controller.OrderController;
+import zohoincubation.com.zoho.ecommerce.src.controller.ProductController;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Viewable;
 import zohoincubation.com.zoho.ecommerce.src.model.Card;
@@ -14,6 +15,10 @@ import zohoincubation.com.zoho.ecommerce.src.model.User;
 public class OrderHelper implements Execute, Viewable {
   private final Scanner sc;
   private final User loggedInUser;
+
+  private final int CLIENT = 1;
+  private final int SELLER = 2;
+ 
 
   public OrderHelper(Scanner sc, User loggedInUser) {
     this.sc = sc;
@@ -29,12 +34,12 @@ public class OrderHelper implements Execute, Viewable {
   public void operation(Scanner sc, User loggedInUser) {
     while (true) {
       try {
-        if (loggedInUser.getRole() == 2) {
+        if (loggedInUser.getRole() == SELLER) {
           System.out.println("\n==============================");
           System.out.println("📦 1. View Orders");
           System.out.println("🚪 0. Exit");
           System.out.println("==============================");
-        } else {
+        } else if (loggedInUser.getRole() == CLIENT) {
           System.out.println("\n==============================");
           System.out.println("🛒 1. Checkout");
           System.out.println("📦 2. View Order");
@@ -46,11 +51,11 @@ public class OrderHelper implements Execute, Viewable {
         sc.nextLine();
         switch (choice) {
           case 1 -> {
-            if (loggedInUser.getRole() == 2) view();
-            else checkout();
+            if (loggedInUser.getRole() == SELLER) view();
+            if(loggedInUser.getRole()  == CLIENT) checkout();
           }
           case 2 -> {
-            if (loggedInUser.getRole() == 1) view();
+            if (loggedInUser.getRole() == CLIENT) view();
           }
           case 0 -> {
             System.out.println("🚪 Exiting Order Management.");
@@ -73,7 +78,6 @@ public class OrderHelper implements Execute, Viewable {
       return;
     }
 
-    if (loggedInUser.getRole() == 1 ) {
       Card card = ((Client)loggedInUser).getcard();
       WishlistHandler wishlistHandler = new WishlistHandler(sc, loggedInUser);
       wishlistHandler.view();
@@ -95,27 +99,30 @@ public class OrderHelper implements Execute, Viewable {
                     return;
                 }
                 Order order = OrderController.createOrder(card, cardTotal, payment, loggedInUser);
-                if (order != null) {
+                if (order != null &&  ProductController.reduceStock(card.getProduct())) {
                     OrderStatusUpdate.flow(order);
+                   
                 } else {
                     System.out.println("❌ Order creation failed. Please try again.");
                 }
               break;  
             default : System.out.println("❌ Invalid choice. Please enter 'Yes' or 'No'.");
         }
-    }
+    
   }
 
   @Override
   public void view() {
       switch (loggedInUser.getRole()) {
-          case 1 -> dispalyClientOrders(sc, loggedInUser);
-          case 2 -> displaySellerOrders(sc, loggedInUser);
+          case CLIENT -> dispalyClientOrders( loggedInUser);
+          case SELLER -> displaySellerOrders( loggedInUser);
           default -> System.out.println("⛔ You are not authorized to view orders.");
       }
   }
 
-  private void dispalyClientOrders(Scanner sc, User loggedInUser) {
+
+  // view orders for client
+  private void dispalyClientOrders( User loggedInUser) {
     System.out.println("📋 Displaying orders for client: " + loggedInUser.getName());
     if (((Client) loggedInUser).getPreviousOrderProduct() == null || ((Client) loggedInUser).getPreviousOrderProduct().isEmpty()) {
       System.out.println("⚠️ No previous orders found for this client.");
@@ -126,7 +133,9 @@ public class OrderHelper implements Execute, Viewable {
     }
   }
 
-  private void displaySellerOrders(Scanner sc, User loggedInUser) {
+
+  // view orders for seller
+  private void displaySellerOrders( User loggedInUser) {
     System.out.println("📋 Displaying placed orders for seller: " + loggedInUser.getName());
     if (((Seller) loggedInUser).getSaledList() == null || ((Seller) loggedInUser).getSaledList().isEmpty()) {
       System.out.println("⚠️ No orders found for this seller.");
@@ -136,4 +145,6 @@ public class OrderHelper implements Execute, Viewable {
       System.out.println("📦 Order Sold " + (i + 1) + ": " + ((Seller) loggedInUser).getSaledList().get(i));
     }
   }
+
+
 }

@@ -25,7 +25,7 @@ public class LoggingCredentials {
     }
 
     public void signUp(Scanner sc) {
-        String[] user = UserHelper.getDetails(sc);
+        String[] user = UserHelper.getDetails(sc,logInUser);
         switch (user.length) {
             case 6 -> logInUser = UserController.createUser(user[0], user[1], user[2], user[3], user[4], user[5]);
             case 7 -> logInUser = UserController.createUser(user[0], user[1], user[2], user[3], user[4], user[5], user[6]);

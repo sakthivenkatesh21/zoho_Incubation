@@ -10,7 +10,7 @@ import zohoincubation.com.zoho.ecommerce.src.model.User;
 
 public class ProductController {
     private static int idGenerator;
-    private static List<Product> products = DataManager.getDataManager().getProduct();
+    private static final List<Product> products = DataManager.getDataManager().getProduct();
 
     public static Product createProduct(String productName, String productDescription, double price, int stock, Category category, User loggedInUser) {
         if (!products.isEmpty() && isProductExists(productName,loggedInUser) != null) {
@@ -19,6 +19,7 @@ public class ProductController {
         Product newProduct = new Product(++idGenerator, productName, productDescription, price, stock, category, (Seller) loggedInUser);
         products.add(newProduct);
         category.getProduct().add(newProduct);
+        ((Seller)loggedInUser).getSellerProduct().add(newProduct);
         return newProduct;
     }
 
@@ -75,15 +76,16 @@ public class ProductController {
       
 
     public static boolean removeProductByCategory(List<Product> productList) {
-        if (productList.isEmpty()) {
-            for (Product obj : productList) {
-                if (products.contains(obj)) {
-                    products.remove(obj);
-                }
+        int removeCount = 0;
+        int  size = productList.size();
+        for (Product obj : productList) {
+            if (products.contains(obj)) {
+                products.remove(obj);
+                removeCount++;
             }
-            return true;
-        }
-        return false;
+         }
+        return removeCount == size;
+      
     }
     public static List<Product> getSellerProducts(Category category , User loggedInUser) {
         List<Product> selleProducts = new ArrayList<>();
@@ -101,5 +103,21 @@ public class ProductController {
             }
         }
         return false;
+    }
+    public static List<Product> getProducts() {
+        if (products.isEmpty()) {
+            return null;
+        }
+        return products;
+    }
+
+    public static  boolean  reduceStock(List<CardProduct> cardProducts){
+        for(CardProduct obj : cardProducts){
+            if(isProductExist(obj.getId())==null){
+                return false;
+            }
+            isProductExist(obj.getId()).setStock(isProductExist(obj.getId()).getStock() - obj.getQuantity());
+        }
+        return true;
     }
 }

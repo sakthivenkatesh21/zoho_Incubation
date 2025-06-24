@@ -11,8 +11,8 @@ public class CardProduct extends Product {
 
     public CardProduct() {}
 
-    public CardProduct(int id, Product product, int quantity) {
-        super(id, product.getProductName(), product.getDescription(), product.getPrice(), 
+    public CardProduct(Product product, int quantity) {
+        super(product.getId(), product.getProductName(), product.getDescription(), product.getPrice(), 
               product.getStock(), product.getCategory(), product.getSeller());
         this.quantity = quantity;
         this.prodTimeDateAdded = LocalDateTime.now();
@@ -61,11 +61,11 @@ public class CardProduct extends Product {
         return getStock() >= getQuantity();
     }
 
-    public boolean reStock() {
-        if(canAddToCard()){
-            setStock( getStock()-getQuantity());
-            return true;
-        }
-        return false;
-    }
+    // public boolean reStock() {
+    //     if(canAddToCard()){
+    //         //setStock( getStock()-getQuantity());
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
+import zohoincubation.com.zoho.ecommerce.src.view.CategoryHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.OrderHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.ProductHelper;
 import zohoincubation.com.zoho.ecommerce.src.view.UserHelper;
@@ -32,6 +33,7 @@ public class Client extends User {
     private void list(Scanner sc , User loggedInUser){
         this.operations = new Execute[]{
             new UserHelper(loggedInUser, sc),
+            new CategoryHelper(sc, loggedInUser),
             new ProductHelper(sc, loggedInUser),
             new WishlistHandler(sc,loggedInUser),
             new OrderHelper(sc, loggedInUser),
@@ -41,6 +43,7 @@ public class Client extends User {
         };
     }
 
+    @Override
     public Execute[] getOperations(Scanner sc, User loggedInUser) {
         if (operations == null) {
             list(sc, loggedInUser);

@@ -2,7 +2,7 @@ package zohoincubation.com.zoho.ecommerce.src.paymentCreditionals;
 
 public interface IPaymentGateway {
 
-    String processPayment();
+    void processPayment();
 
     String generateTransactionId();
 
