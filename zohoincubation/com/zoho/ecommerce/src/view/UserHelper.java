@@ -72,7 +72,9 @@ public class UserHelper implements Execute, Editable, Viewable {
         System.out.printf("🔑 Role              : %-30s%n", role);
         System.out.printf("🧑 Name              : %-30s%n", loggedInUser.getName());
         System.out.printf("📧 Email             : %-30s%n", loggedInUser.getEmail());
-        System.out.printf("🆔 User ID           : %-30s%n", loggedInUser.getId());
+        System.out.printf("📱 Phone Number      : %-30s%n", loggedInUser.getPhone());
+        System.out.printf("🏠 Address           : %-30s%n", (loggedInUser.getRole() == CLIENT ? ((Client) loggedInUser).getAddress() : ((Seller) loggedInUser).getCompanyAddress()));
+        // System.out.printf("🆔 User ID           : %-30s%n", loggedInUser.getId());
 
         if (loggedInUser.getRole() == SELLER) {
             Seller seller = (Seller) loggedInUser;

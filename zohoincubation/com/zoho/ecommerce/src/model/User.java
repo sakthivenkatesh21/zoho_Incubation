@@ -1,5 +1,6 @@
 package zohoincubation.com.zoho.ecommerce.src.model;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import zohoincubation.com.zoho.ecommerce.src.interfaceController.Execute;
 
@@ -72,28 +73,34 @@ public abstract class User {
 
     public void showMenu(Scanner sc,User loggedInUser){
         System.out.println("Welcome  " + loggedInUser.getName() + " to the E-commerce Platform");
-        while(true){
-
+        while (true) {
             System.out.println("\n========== MENU ==========");
             for (int i = 0; i < this.getOperations(sc, loggedInUser).length; i++) {
-                System.out.println((i + 1) + ". " + this.operations[i].getfunctionName());
+            System.out.println((i + 1) + ". " + this.operations[i].getfunctionName());
             }
             System.out.println("==========================\n");
             System.out.println("Enter a Choice - Zero(0) to Exit");
-            int choice = sc.nextInt(); 
+            
+            try {
+            int choice = sc.nextInt();
             sc.nextLine();
-            if(choice == 0){
+            if (choice == 0) {
                 System.out.println("Exiting to previous menu.");
                 return;
             }
-            if(choice < 1 || choice > operations.length){
+            if (choice < 1 || choice > operations.length) {
                 System.out.println("Invalid Choice");
+            } else {
+                operations[choice - 1].operation(sc, loggedInUser);
             }
-
-            else{
-                operations[choice-1].operation(sc,loggedInUser);
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                sc.nextLine(); 
             }
-        }     
+            catch (Exception e) {
+                System.out.println("An error occurred: " + e.getMessage());
+            }
+        }
     }
     public abstract Execute[] getOperations(Scanner sc ,User loggedInUser);
     public abstract int getRole();

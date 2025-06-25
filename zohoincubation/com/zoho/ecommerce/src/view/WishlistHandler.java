@@ -1,6 +1,5 @@
 package zohoincubation.com.zoho.ecommerce.src.view;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -65,16 +64,15 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
                     }
                     default -> System.out.println("❌ Invalid choice, please try again.");
                 }
-            } catch (InputMismatchException e ) {
+            } catch (InputMismatchException e) {
                 System.out.println("❌ Invalid input. Please enter a valid number.");
-                sc.nextLine(); 
-            }
-            catch (Exception e) {
+                sc.nextLine();
+            } catch (Exception e) {
                 System.out.println("❌ An unexpected error occurred: " + e.getMessage());
             }
         }
     }
-        
+
     @Override
     public void add() {
         card = ((Client) loggedInUser).getcard();
@@ -85,11 +83,10 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
             System.out.println("⚠️ Product already exists in the cart. Please update the quantity instead.");
             return;
         }
-        // CardProduct cardProduct = new CardProduct(card.getProduct().size() + 1, product, quantity);
 
         CardProduct cardProduct = new CardProduct(product, quantity);
-        if (cardProduct.canAddToCard()  && quantity > 0) {
-            if(quantity > 10) {
+        if (cardProduct.canAddToCard() && quantity > 0) {
+            if (quantity > 10) {
                 System.out.println("⚠️ You cannot add more than 10 items to the cart.");
                 quantity = 10;
                 cardProduct.setQuantity(quantity);
@@ -162,31 +159,34 @@ public class WishlistHandler implements Execute, Creatable, Editable, Viewable, 
 
     public void checkQuantityExist(List<CardProduct> cardProduct) {
         for (CardProduct obj : cardProduct) {
-            if (!obj.canAddToCard()) {
-                System.out.println("⚠️ " + obj.getProductName() + " Quantity Available: " + obj.getStock() + " Your Chosen Quantity: " + obj.getQuantity());
-                if (obj.getStock() > 0 ) {
-                    System.out.println(obj.getQuantity()+"Quantity"+obj.getStock()+"Stock");
-                    obj.setQuantity(obj.getStock());
-                   
-
-                    System.out.println("✅ Available Stock " + obj.getQuantity() + " Updated to " + obj.getProductName());
+            Product products = ProductController.isProductExist(obj.getId());
+            if (products != null) {
+                if (products.getStock() < obj.getQuantity()) {
+                    if (products.getStock() > 0) {
+                        System.out.println("⚠️ " + obj.getProductName() + " Stock Available: " + products.getStock() + " Your Chosen Quantity: " + obj.getQuantity());
+                        obj.setQuantity(products.getStock());
+                        System.out.println("✅ Available Stock " + products.getStock() + " Updated to " + obj.getProductName());
+                    } else {
+                        System.out.println("❌ The Product " + products.getProductName() + " is Out Of Stock.");
+                        cardProduct.remove(obj);
+                        System.out.println("🗑️ It has been removed from the cart.");
+                        return;
+                    }
                 } else {
-                    System.out.println("❌ The Product " + obj.getProductName() + " is Out Of Stock.");
-                    System.out.println("🗑️ It has been removed from the cart.");
-                    card.getProduct().remove(obj);
+                    System.out.println("Product Choosed :" + obj.getProductName() + " Quantity: " + obj.getQuantity() + " Price " + obj.getPrice());
                 }
+            } else {
+                System.out.println("❌ The Product " + obj.getProductName() + " is not available.");
+                cardProduct.remove(obj);
+                System.out.println("🗑️ It has been removed from the cart.");
+                
             }
-            else{
-                // obj.setStock(obj.getStock() - obj.getQuantity());
-                System.out.println("Product Choosed :"+obj.getProductName());
-            }
-
         }
     }
 
     private CardProduct checkCardProduct() {
         view();
-        System.out.println("🔢 Enter the Product  ID  from the cart \n Or Enter '-1' to Exit: ");
+        System.out.println("🔢 Enter the Product ID from the cart \n Or Enter '-1' to Exit: ");
         int indexId = sc.nextInt();
         if (indexId == -1) {
             System.out.println("🚪 You have chosen to proceed with Exit.");

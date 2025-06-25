@@ -56,6 +56,7 @@ public class OrderHelper implements Execute, Viewable {
           }
           case 2 -> {
             if (loggedInUser.getRole() == CLIENT) view();
+            else System.out.println("❌ Invalid choice. Please try again.");
           }
           case 0 -> {
             System.out.println("🚪 Exiting Order Management.");
@@ -108,6 +109,7 @@ public class OrderHelper implements Execute, Viewable {
                    
                 } else {
                     System.out.println("❌ Order creation failed. Please try again.");
+                    System.out.println("Amount will be refunded to your account.");
                 }
               break;  
             default : System.out.println("❌ Invalid choice. Please enter 'Yes' or 'No'.");
@@ -133,7 +135,8 @@ public class OrderHelper implements Execute, Viewable {
       return;
     }
     for (int i = 0; i < ((Client) loggedInUser).getPreviousOrderProduct().size(); i++) {
-      System.out.println("📦 Order " + (i + 1) + ": " + ((Client) loggedInUser).getPreviousOrderProduct().get(i));
+      System.out.println("📦 Order " + (i + 1) );
+      System.out.println(((Client) loggedInUser).getPreviousOrderProduct().get(i));
     }
   }
 
@@ -146,7 +149,8 @@ public class OrderHelper implements Execute, Viewable {
       return;
     }
     for (int i = 0; i < ((Seller) loggedInUser).getSaledList().size(); i++) {
-      System.out.println("📦 Order Sold " + (i + 1) + ": " + ((Seller) loggedInUser).getSaledList().get(i));
+      System.out.println("📦 Order Sold " + (i + 1) );
+      System.out.println(((Seller) loggedInUser).getSaledList().get(i));
     }
   }
 

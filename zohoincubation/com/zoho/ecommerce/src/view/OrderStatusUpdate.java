@@ -6,17 +6,15 @@ import zohoincubation.com.zoho.ecommerce.src.model.OrderStatus;
 class OrderStatusUpdate {
 
     private static void printOrderStatus(String productName, int orderId, String transactionId, String status) {
-        System.out.println("""
-            ╔════════════════════════════════════════════════════╗
-            ║                    ORDER STATUS                    ║
-            ╠════════════════════════════════════════════════════╣
-            ║ 📦 Client Name    : %-30s ║
-            ║ 🆔 Order ID       : %-30s ║
-            ║ 🔁 Transaction    : %-30s ║
-            ║ 🚚 Order Status   : %-30s ║
-            ╚════════════════════════════════════════════════════╝
+        System.out.printf("""
+            =================== 🧾 ORDER SUMMARY ===================
+            📦 Product Name    : %-30s
+            🆔 Order ID        : %-30d
+            🔁 Transaction ID  : %-30s
+            🚚 Order Status    : %-30s
+            ========================================================
             
-            """.formatted(productName, orderId, transactionId, status));
+            """, productName, orderId, transactionId, status);
     }
 
     public static void flow(Order order) {

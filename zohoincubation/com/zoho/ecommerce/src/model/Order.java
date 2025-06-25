@@ -120,7 +120,7 @@ public class Order {
             System.out.println("Product Name: " + prod.getProductName());
             System.out.println("Quantity: " + prod.getQuantity());
             System.out.println("Price: $" + prod.getPrice()*prod.getQuantity());
-            System.out.println("Seller Info: " + prod.getSeller().getName()+"Company: " + prod.getSeller().getCompany());
+            System.out.println("Seller Name: " + prod.getSeller().getName()+"  Company: " + prod.getSeller().getCompany());
             System.out.println("--------------------------------------------------");
         }
         System.out.println("--------------------------------------------------");

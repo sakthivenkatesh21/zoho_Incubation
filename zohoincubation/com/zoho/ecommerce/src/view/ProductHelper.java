@@ -46,6 +46,7 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
                 System.out.println("2. 🔍 View Product");
                 System.out.println("3. ✏️ Update Product");
                 System.out.println("4. ❌ Remove Product");
+                if(!ProductController.getStockIsEmpty(loggedInUser))System.out.println("5. 📦 Re Stock");
                 System.out.println("0. 🔙 Back (Exit)");
             }
             System.out.println("=========================================");
@@ -63,7 +64,8 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
                     }
                     case 2 -> view();
                     case 3 -> {if(loggedInUser.getRole() ==SELLER)update();}
-                    case 4 -> {if(loggedInUser.getRole()==SELLER)delete();}
+                    case 4 -> {if(loggedInUser.getRole() ==SELLER)delete();}
+                    case 5 -> {if(loggedInUser.getRole() == SELLER) reStock();}
                     case 0 -> {
                         System.out.println("🔙 Exiting to previous menu.");
                         return;
@@ -236,7 +238,7 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
         }
         for (Product obj : product) {
             System.out.println("✅ Product found in Category: " + obj.getCategory().getName());
-            System.out.println("📝 Product Details: \n \t " + obj);
+            System.out.println("📝 Product Details: \n  " + obj);
         }
         // System.out.println("****************************************");
         // System.out.println("*                                      *");
@@ -291,11 +293,12 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
             System.out.println("❌ Product not found in the selected category.");
             return false;
         }
-        else if(!product.isAvailableStock()) {
+        else if(product.isAvailableStock()) {
             System.out.println("⚠️ Product is out of stock.");
             return false;
         }
         // category = product.getCategory();
+        System.out.println("✅ Product found: \n" + product);
         WishlistHandler addCard = new WishlistHandler(product, sc, loggedInUser);
         addCard.add();
         return true;
@@ -365,6 +368,62 @@ public class ProductHelper implements Execute, Creatable, Editable, Viewable, De
         sc.nextLine();
         return productStock;
     }
+// restock the Seller product 
+    private void reStock() { 
+        List<Product> product = ProductController.getEmptyStockProducts(loggedInUser);
+        while(true){
+            System.out.println("1. 📦 Restock  Products\n2.View ReStock \n0.Exit");
+            System.out.print("👉 Enter your choice: ");
+            try {
+                int choice = sc.nextInt();
+                sc.nextLine();
+                switch(choice){
+                    case 1->  reStockAll(product);
+                    case 2->  viewReStockk(product);
+                    case 0->  {
+                        System.out.println("🔙 Exiting to previous menu.");
+                        return;
+                    }
+                    default-> {
+                        System.out.println("❌ Invalid choice. Please try again.");
+                        return;    
+                    }
+                }
+            }catch (InputMismatchException e) {
+                System.out.println("❌ Invalid input. Please enter a valid number.");
+            }
+            catch (Exception e) {
+                System.out.println("❌ An unexpected error occurred: " + e.getMessage());
+            }
+        }
+    } 
+    private void  reStockAll(List<Product> product) {
+        while(true){
+            viewReStockk(product);
+            System.out.println("Enter a Product Id to update the stock or 0 to exit:");
+            int productId = sc.nextInt();
+            sc.nextLine();
+            if (productId == 0) {
+                System.out.println("🔙 Exiting to previous menu.");
+                return;
+            }
+            Product selectedProduct = ProductController.isProductExist(productId);
+            if (selectedProduct == null || !product.contains(selectedProduct)) {
+                System.out.println("❌ Product not found in the selected category.");
+                return;
+            }
+            selectedProduct.setStock(getStock("📦 Update  the  Product Stock for " + selectedProduct.getProductName() + ":"));
+            System.out.println("✅ Product " + selectedProduct.getProductName() + " stock updated successfully to: " + selectedProduct.getStock());   
+        }
+       
+    }
+    private void  viewReStockk(List<Product> product) {  
+        System.out.println("📦 Products available for restocking:");
+        System.out.println("------------------------------------------------");
+        for (Product obj : product) {
+           System.out.println(" Product Id :"+obj.getId() +"Product Name :"+ obj.getProductName() +"  Stock :"+ obj.getStock());
+        }
+        System.out.println("------------------------------------------------");
 
-    
+    }
 }

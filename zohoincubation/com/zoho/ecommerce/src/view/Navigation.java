@@ -8,9 +8,11 @@ public  class Navigation {
     private final Scanner sc;
     private final LoggingCredentials credentials;
 
+
     public Navigation() {
         sc = new Scanner(System.in);
         credentials = new LoggingCredentials();
+        InputProduct inputProduct = new InputProduct();
     }
 
     public void menu() {

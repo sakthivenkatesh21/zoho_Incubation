@@ -82,7 +82,7 @@ public class Client extends User {
     
     @Override
     public String toString(){
-        System.out.println("Client ID : " + getId());
+        // System.out.println("Client ID : " + getId());
         System.out.println("Client Name : " + getName());
         System.out.println("Client Phone : " + getPhone());
         System.out.println("Client Email : " + getEmail());

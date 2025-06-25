@@ -25,7 +25,7 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
 
     @Override
     public String getfunctionName() {
-        return " Category Management";
+        return "Category Management";
     }
 
     @Override
@@ -36,7 +36,9 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
         while (true) {
             try {
                 if (loggedInUser.getRole() == CLIENT) {
-                    System.out.println("1️⃣ View Categories Products \n0️⃣ Exit");
+                    view();
+                    return;
+                    // System.out.println("1️⃣ View Categories Products \n0️⃣ Exit");
                 } else if (loggedInUser.getRole() == SELLER) {
                     System.out.println("1️⃣ Add Category \n2️⃣ View Categories \n3️⃣ Delete Category \n4️⃣ Update Category \n0️⃣ Exit");
                 }
@@ -44,13 +46,7 @@ public class CategoryHelper implements Execute, Creatable, Editable, Viewable, D
                 int choice = sc.nextInt();
                 sc.nextLine();
                 switch (choice) {
-                    case 1 -> {
-                        if (loggedInUser.getRole() == SELLER) {
-                            add();
-                        } else {
-                            view();
-                        }
-                    }
+                    case 1 -> add();
                     case 2 -> view();
                     case 3 -> delete();
                     case 4 -> update();

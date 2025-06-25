@@ -4,10 +4,9 @@ public enum OrderStatus {
     PENDING("⏳ Pending"),
     CONFIRMED("✅ Confirmed"),
     SHIPPED("🚚 Shipped"),
-    DELIVERED("📬 Delivered")
-   ;
+    DELIVERED("📬 Delivered");
 
-    private  final String label;
+    private final String label;
 
     OrderStatus(String label) {
         this.label = label;

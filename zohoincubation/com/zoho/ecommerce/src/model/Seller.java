@@ -28,8 +28,8 @@ public class Seller extends User {
         this.profit = 0;
         this.company = company;
         this.companyAddress = companyAddress;
-        this.sellerProduct = new ArrayList<>();;
-        this.saledList = new ArrayList<>();;
+        this.sellerProduct = new ArrayList<>();
+        this.saledList = new ArrayList<>();
     }
     
     private void list(Scanner sc, User loggedInUser){ 

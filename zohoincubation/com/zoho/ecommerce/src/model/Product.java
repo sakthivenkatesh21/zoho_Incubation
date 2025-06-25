@@ -53,7 +53,12 @@ public class Product {
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        if (price > 0) {
+            this.price = price;
+        }
+        else {
+            throw new IllegalArgumentException("Price must be greater than zero.");
+        } 
     }
 
     public int getStock() {
@@ -61,11 +66,16 @@ public class Product {
     }
 
     public void setStock(int stock) {
-        this.stock = stock;
+        if (stock >= 0) {
+            this.stock = stock;
+        }
+        else {
+            throw new IllegalArgumentException("Stock cannot be negative.");
+        }      
     }
 
     public boolean isAvailableStock() {
-        return stock > 0;
+        return stock <= 0;
     }
 
     public Category getCategory() {
@@ -86,17 +96,16 @@ public class Product {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("========================================\n")
-          .append("           Product Details              \n")
-          .append("========================================\n")
-          .append(String.format("ID          : %d\n", getId()))
-          .append(String.format("Name        : %s\n", getProductName()))
-          .append(String.format("Price       : $%.2f\n", getPrice()))
-          .append(String.format("Quantity    : %d\n", getStock()))
-          .append(String.format("Description : %s\n", getDescription()))
-          .append(String.format("Seller      : %s\n", getSeller().getName() ))
-          .append("========================================\n");
-        return sb.toString();
-    }
+        System.out.println("========================================");
+        System.out.println("           Product Details              ");
+        System.out.println("========================================");
+        System.out.println("ID          : " + getId());
+        System.out.println("Name        : " + getProductName());
+        System.out.println("Price       : $" + getPrice());
+        System.out.println("Quantity    : " + (getStock() == 0 ? "Out of Stock" : getStock()));
+        System.out.println("Description : " + getDescription());
+        System.out.println("Seller      : " + getSeller().getName());
+        System.out.println("========================================");
+        return "";
+    }   
 }

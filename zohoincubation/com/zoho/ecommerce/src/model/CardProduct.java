@@ -58,6 +58,7 @@ public class CardProduct extends Product {
     }
 
     public boolean canAddToCard() {
+        
         return getStock() >= getQuantity();
     }
     @Override

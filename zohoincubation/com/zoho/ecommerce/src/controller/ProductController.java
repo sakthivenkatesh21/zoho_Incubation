@@ -121,4 +121,23 @@ public class ProductController {
         }
         return true;
     }
+
+    public  static boolean  getStockIsEmpty(User loggedInUser) {
+        
+        for (Product product : products) {
+           if(product.getSeller().getId() == loggedInUser.getId() && product.isAvailableStock()){   
+                return false;
+           }
+        }
+        return true;
+    }
+    public static List<Product>  getEmptyStockProducts(User loggedInUser) {
+        List<Product> emptyStockProducts = new ArrayList<>();
+        for (Product product : products) {
+            if(product.getSeller().getId() == loggedInUser.getId() && product.isAvailableStock()) {
+                emptyStockProducts.add(product);
+            }          
+        }
+        return  emptyStockProducts;
+    }      
 }

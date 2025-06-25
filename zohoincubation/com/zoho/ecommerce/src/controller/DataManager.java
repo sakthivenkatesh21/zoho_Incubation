@@ -44,4 +44,7 @@ public class DataManager {
     public List<Category> getCategory() {
         return category;
     }
+
+
+    
 }
